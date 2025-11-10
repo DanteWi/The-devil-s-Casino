@@ -30,7 +30,6 @@ fun LoadingScreen() {
         ) {
             Spacer(modifier = Modifier.height(80.dp))
 
-            // --- Logo at the Top ---
             Image(
                 painter = painterResource(id = R.drawable.chatgpt_image_2_nov__2025__21_23_04),
                 contentDescription = "App Logo",
@@ -40,10 +39,8 @@ fun LoadingScreen() {
                 contentScale = ContentScale.Fit
             )
 
-            // Spacer to push animation to bottom
             Spacer(modifier = Modifier.weight(1f))
 
-            // --- Animated PNG or Lottie Animation at Bottom ---
             AsyncImage(
                 model  =  R.drawable.dgcrm1j_d353160c_45c3_4bca_87e3_aaafccfd9bd4,
                 contentDescription = "Loading",

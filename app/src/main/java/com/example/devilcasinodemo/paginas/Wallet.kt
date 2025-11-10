@@ -4,6 +4,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun Lobby() {
-    Text("this is the lobby")
+fun Wallet() {
+    Text("this is the Wallet")
+
 }
