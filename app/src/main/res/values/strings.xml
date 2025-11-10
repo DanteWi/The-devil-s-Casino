@@ -1,3 +1,208 @@
 <resources>
     <string name="app_name">DevilCasinoDemo</string>
+    <string name="terms_and_Conditions">"\n                        Welcome to Devil Casino Demo! By creating an account, you agree to our Terms and Conditions. \n                        This includes following all applicable laws, not engaging in fraudulent activities, and understanding that this app is for demonstration purposes only.\n\n                        Please read carefully before proceeding.\n                    "</string>
+    <string name="welcome_to_devil_casino_demo_by_creating_an_account_you_agree_to_our_terms_and_conditions_this_includes_following_all_applicable_laws_not_engaging_in_fraudulent_activities_and_understanding_that_this_app_is_for_demonstration_purposes_only_please_read_carefully_before_proceeding_lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_vivamus_lacinia_odio_vitae_vestibulum_vestibulum_cras_venenatis_euismod_malesuada_donec_a_quam_sit_amet_eros_feugiat_tincidunt_integer_nec_dolor_nec_urna_facilisis_aliquam_curabitur_efficitur_purus_a_sollicitudin_varius_libero_nisi_tincidunt_justo_a_feugiat_nulla_magna_in_justo_sed_et_risus_ut_sapien_ullamcorper_sagittis_suspendisse_potenti_pellentesque_habitant_morbi_tristique_senectus_et_netus_et_malesuada_fames_ac_turpis_egestas">"\n                        Welcome to Devil Casino Demo! By creating an account, you agree to our Terms and Conditions. \n                        \n                        This includes following all applicable laws, not engaging in fraudulent activities, and understanding that this app is for demonstration purposes only.\n\n                        Please read carefully before proceeding. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Donec a quam sit amet eros feugiat tincidunt. Integer nec dolor nec urna facilisis aliquam. Curabitur efficitur, purus a sollicitudin varius, libero nisi tincidunt justo, a feugiat nulla magna in justo. Sed et risus ut sapien ullamcorper sagittis. Suspendisse potenti. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.\n                    "</string>
+    <string name="terms">
+Terms and Conditions – Devils Casino\n
+\n
+Effective Date: [1/10/2025]\n
+Version: 2.0\n
+\n
+Welcome to Devils Casino (“we”, “our”, “us”). Please read these Terms and Conditions (“Terms”) carefully before accessing or using the mobile application Devils Casino (the “App”). By using the App, you accept and agree to be bound by these Terms. If you do not agree, you must not use the App.\n
+\n
+1. Introduction\n
+\n
+1.1 Devils Casino provides a virtual entertainment platform featuring casino-style games for recreational purposes.\n
+\n
+1.2 The App uses a virtual currency called Devil Coins (“DC”), which can be obtained through in-app purchases or by watching advertisements.\n
+\n
+1.3 DC are not real money and cannot be exchanged for real currency outside the App. All prizes, rewards, or items purchased or redeemed with DC are digital goods. The App is intended solely for entertainment and is not classified as gambling under EU law.\n
+\n
+1.4 By using the App, you confirm that you understand and agree that DC and in-app prizes do not constitute a financial investment, gambling, or monetary reward.\n
+\n
+2. Eligibility\n
+\n
+2.1 To use the App, you must be:\n
+\n
+At least 18 years old or of the legal age of majority in your country.\n
+\n
+Legally capable of entering into a binding agreement under your local law.\n
+\n
+2.2 By registering or using the App, you warrant that you meet the eligibility criteria.\n
+\n
+2.3 We reserve the right to suspend or terminate accounts that do not meet these requirements.\n
+\n
+3. Account Registration\n
+\n
+3.1 Registration is required to access some features of the App. You agree to:\n
+\n
+Provide accurate, current, and complete information.\n
+\n
+Keep your login credentials confidential.\n
+\n
+Notify us immediately of any unauthorized use of your account.\n
+\n
+3.2 Accounts may be suspended or terminated for:\n
+\n
+Violating these Terms.\n
+\n
+Fraudulent, misleading, or unlawful activity.\n
+\n
+Inactivity for prolonged periods.\n
+\n
+3.3 You are responsible for all activities conducted through your account.\n
+\n
+4. Devil Coins (DC)\n
+\n
+4.1 Acquisition:\n
+\n
+DC can be obtained through in-app purchases, promotional campaigns, or by watching advertisements.\n
+\n
+Prices for DC purchased with real money are displayed clearly before purchase.\n
+\n
+4.2 Usage:\n
+\n
+DC can be used exclusively within the App to play games or purchase in-app items and prizes.\n
+\n
+DC cannot be redeemed for cash, real-world goods outside the App, or transferred to another account.\n
+\n
+4.3 Non-Gambling Classification:\n
+\n
+DC are virtual currency and do not represent real-world money.\n
+\n
+All gameplay involving DC is for entertainment only.\n
+\n
+4.4 Expiry and Forfeiture:\n
+\n
+DC may expire or be forfeited after periods of inactivity as defined in the App.\n
+\n
+Notifications will be provided in the App regarding expiry rules.\n
+\n
+5. In-App Purchases\n
+\n
+5.1 All DC purchased with real money are non-refundable, except where EU consumer protection laws require refunds.\n
+\n
+5.2 Any promotions, discounts, or bonus DC are subject to specific terms and conditions, which will be displayed in the App.\n
+\n
+5.3 You must provide valid payment information for purchases. By making a purchase, you authorize the App to charge your payment method.\n
+\n
+6. Gameplay and Prizes\n
+\n
+6.1 Games:\n
+\n
+Games in the App are for entertainment purposes only.\n
+\n
+Game outcomes are randomized within the App’s algorithms and are not influenced by real-world monetary factors.\n
+\n
+6.2 Prizes and Rewards:\n
+\n
+Prizes are digital goods or virtual items that can be purchased or redeemed with DC.\n
+\n
+Prizes cannot be converted into real-world currency or legally constitute gambling winnings.\n
+\n
+6.3 Prize Modifications:\n
+\n
+Devils Casino may change, remove, or add prizes at any time.\n
+\n
+Reasonable notice will be provided within the App or through in-app notifications.\n
+\n
+6.4 Abuse and Fraud:\n
+\n
+Attempts to manipulate game outcomes or exploit system bugs will result in account suspension and forfeiture of DC.\n
+\n
+7. User Conduct\n
+\n
+7.1 You agree to use the App responsibly and not to:\n
+\n
+Engage in illegal, fraudulent, or harmful activity.\n
+\n
+Interfere with the operation or security of the App.\n
+\n
+Harass, abuse, or harm other users.\n
+\n
+Exploit any glitches or bugs in the App.\n
+\n
+7.2 Any violation may result in suspension or termination of your account without compensation.\n
+\n
+8. Intellectual Property\n
+\n
+8.1 All content, including graphics, logos, game mechanics, software, and text, is owned by Devils Casino or its licensors.\n
+\n
+8.2 You are granted a limited, non-exclusive license to use the App for personal entertainment.\n
+\n
+8.3 You may not:\n
+\n
+Reproduce, distribute, or modify App content without permission.\n
+\n
+Reverse engineer, decompile, or attempt to extract source code.\n
+\n
+9. Privacy and Data Protection\n
+\n
+9.1 We collect and process your personal data in accordance with the EU General Data Protection Regulation (GDPR) and our Privacy Policy.\n
+\n
+9.2 By using the App, you consent to:\n
+\n
+The collection, processing, and storage of your personal data.\n
+\n
+The use of data for account management, customer support, and promotional purposes.\n
+\n
+9.3 You have rights under GDPR, including access, correction, and deletion of your data. Requests can be sent to support@devilscasino.com.\n
+\n
+10. Limitation of Liability\n
+\n
+10.1 The App is provided “as is” and without warranties of any kind.\n
+\n
+10.2 To the maximum extent permitted by law, Devils Casino shall not be liable for:\n
+\n
+Loss or corruption of DC or digital items.\n
+\n
+Direct, indirect, incidental, or consequential damages from App use.\n
+\n
+Technical failures, interruptions, or errors in gameplay.\n
+\n
+10.3 Nothing in these Terms limits your statutory rights under EU consumer protection law.\n
+\n
+11. Termination and Suspension\n
+\n
+11.1 We may suspend or terminate accounts for violation of these Terms, abuse of the App, or fraudulent activity.\n
+\n
+11.2 Upon termination:\n
+\n
+Your account will be permanently deactivated.\n
+\n
+All DC and digital items will be forfeited.\n
+\n
+You will not be entitled to any refund unless required by law.\n
+\n
+12. Modifications to the Terms\n
+\n
+12.1 We may update these Terms from time to time.\n
+\n
+12.2 Updated Terms will be posted in the App. Continued use after updates constitutes acceptance of the revised Terms.\n
+\n
+13. Dispute Resolution\n
+\n
+13.1 These Terms are governed by the laws of the European Union and the applicable laws of your country of residence.\n
+\n
+13.2 Disputes should be resolved initially through amicable negotiations with Devils Casino.\n
+\n
+13.3 If unresolved, disputes may be submitted to competent courts in the jurisdiction where the user resides.\n
+\n
+13.4 For users in the EU, the Online Dispute Resolution (ODR) platform of the European Commission may be used: https://ec.europa.eu/consumers/odr\n
+\n
+14. Miscellaneous\n
+\n
+14.1 Force Majeure: We are not liable for delays or failures caused by events beyond our control, including technical failures, natural disasters, or internet outages.\n
+\n
+14.2 Severability: If any provision is invalid or unenforceable, the remaining provisions remain in full force.\n
+\n
+14.3 Entire Agreement: These Terms, together with our Privacy Policy, constitute the entire agreement between you and Devils Casino regarding the App.\n
+\n
+15. Contact Information\n
+\n
+For questions or concerns, please contact:\n
+Email: support@devilscasino.com
+</string>
+    <string name="effective_date_1_10_2025">Effective Date: [1/10/2025]\n</string>
+
 </resources>

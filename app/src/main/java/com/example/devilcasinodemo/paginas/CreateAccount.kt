@@ -13,7 +13,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
@@ -33,9 +37,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -47,11 +54,12 @@ import com.example.devilcasinodemo.ui.theme.DevilCasinoDemoTheme
 fun CreateAccountScreen() {
     val neonOrange = Color(0xFFFF6600)
     val backgroundColor = Color(0xFF0C0602)
-
+    var user by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-
+    var rpasword by remember { mutableStateOf("") }
     var checked by remember { mutableStateOf(false) }
+    var showDialog by remember { mutableStateOf(false) }
 
     Surface(
         modifier = Modifier
@@ -66,11 +74,14 @@ fun CreateAccountScreen() {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Create Accout",
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
-                color = neonOrange
+            Image(
+
+                painter = painterResource(id = R.drawable.chatgpt_image_10_nov__2025__16_07_21),
+                contentDescription = "Login Sign",
+                modifier = Modifier
+                    .padding(1.dp)
+                    .width(200.dp),
+                contentScale = ContentScale.Fit
             )
 
             Spacer(modifier = Modifier.height(32.dp))
@@ -159,22 +170,86 @@ fun CreateAccountScreen() {
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically
-                ){
-
+                ) {
                     Checkbox(
                         checked = checked,
-                        onCheckedChange = {checked = it}
+                        onCheckedChange = { checked = it }
                     )
-                    Text(buildAnnotatedString {
-                        append("Terms and Conditions")
 
-                    })
+                    ClickableText(
+                        text = buildAnnotatedString {
+                            withStyle(
+                                style = SpanStyle(
+                                    color = Color.White, // white text
+                                    fontSize = 14.sp // optional: match theme font size
+                                )
+                            ) {
+                                append("Terms and Conditions")
+                            }
+                        },
+                        modifier = Modifier.padding(start = 8.dp),
+                        onClick = { showDialog = true } // 👈 open popup
+                    )
                 }
 
+                if (showDialog) {
+                    androidx.compose.ui.window.Dialog(
+                        onDismissRequest = { showDialog = false }
+                    ) {
+                        Surface(
+                            color = backgroundColor,
+                            shape = RoundedCornerShape(12.dp),
+                            border = BorderStroke(2.dp, neonOrange),
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxWidth()
+                                .fillMaxHeight(0.9f)
+                        ) {
+                            // Add vertical scroll
+                            val scrollState = rememberScrollState()
+
+                            Column(
+                                modifier = Modifier
+                                    .padding(20.dp)
+                                    .fillMaxSize()
+                                    .verticalScroll(scrollState), // 👈 makes content scrollable
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text(
+                                    text = "Terms and Conditions",
+                                    color = neonOrange,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 20.sp
+                                )
+
+                                Spacer(modifier = Modifier.height(16.dp))
+
+                                Text(
+                                    text = stringResource(R.string.terms),
+                                    color = Color.White,
+                                    fontSize = 14.sp,
+                                    lineHeight = 20.sp
+                                )
+
+                                Spacer(modifier = Modifier.height(16.dp))
+
+                                Button(
+                                    onClick = { showDialog = false },
+                                    colors = ButtonDefaults.buttonColors(containerColor = neonOrange),
+                                    shape = RoundedCornerShape(8.dp)
+                                ) {
+                                    Text("Close", color = Color.Black, fontWeight = FontWeight.Bold)
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 }
+
+
 @Preview(showBackground = true)
 @Composable
 fun Previewform2() {
