@@ -9,7 +9,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.devilcasinodemo.R
-import com.example.devilcasinodemo.navigator.NavigatorMenu
 import com.example.devilcasinodemo.ui.theme.DevilCasinoDemoTheme
 
 @Composable

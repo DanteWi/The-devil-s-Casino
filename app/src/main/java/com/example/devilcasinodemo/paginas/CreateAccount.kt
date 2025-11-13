@@ -46,18 +46,20 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.devilcasinodemo.R
 import com.example.devilcasinodemo.ui.theme.DevilCasinoDemoTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CreateAccountScreen() {
+fun CreateAccountScreen(navController: NavHostController) {
     val neonOrange = Color(0xFFFF6600)
     val backgroundColor = Color(0xFF0C0602)
     var user by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var rpasword by remember { mutableStateOf("") }
+    var rpassword by remember { mutableStateOf("") }
     var checked by remember { mutableStateOf(false) }
     var showDialog by remember { mutableStateOf(false) }
 
@@ -95,8 +97,8 @@ fun CreateAccountScreen() {
             ) {
 
                 OutlinedTextField(
-                    value = email,
-                    onValueChange = { email = it },
+                    value = user,
+                    onValueChange = { user = it },
                     label = { Text("User Name", color = neonOrange) },
                     textStyle = LocalTextStyle.current.copy(color = neonOrange),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -140,8 +142,8 @@ fun CreateAccountScreen() {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 OutlinedTextField(
-                    value = password,
-                    onValueChange = { password = it },
+                    value = rpassword,
+                    onValueChange = { rpassword = it },
                     label = { Text("Repeat Password", color = neonOrange) },
                     textStyle = LocalTextStyle.current.copy(color = neonOrange),
                     visualTransformation = PasswordVisualTransformation(),
@@ -161,7 +163,8 @@ fun CreateAccountScreen() {
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(50.dp)
+                        .height(50.dp),
+                    enabled = checked
                 ) {
                     Text("Create Account", color = Color.Black, fontWeight = FontWeight.Bold)
                 }
@@ -254,6 +257,8 @@ fun CreateAccountScreen() {
 @Composable
 fun Previewform2() {
     DevilCasinoDemoTheme {
-        CreateAccountScreen()
+        // Create a dummy NavController for preview
+        val navController = rememberNavController()
+        CreateAccountScreen(navController = navController)
     }
 }

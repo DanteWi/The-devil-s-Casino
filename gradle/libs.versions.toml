@@ -17,6 +17,7 @@ navigationComposeJvmstubs = "2.9.5"
 foundationLayoutAndroid = "1.7.2"
 firebaseFirestoreKtx = "26.0.2"
 foundationLayoutAndroidVersion = "1.6.6"
+navigationRuntimeAndroid = "2.9.6"
 
 [libraries]
 androidx-compose-bom-v20251001 = { module = "androidx.compose:compose-bom", version.ref = "composeBomVersion" }
@@ -44,6 +45,7 @@ androidx-navigation-compose-jvmstubs = { group = "androidx.navigation", name = "
 androidx-foundation-layout-android = { group = "androidx.compose.foundation", name = "foundation-layout-android", version.ref = "foundationLayoutAndroid" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 foundation-layout-android = { group = "androidx.compose.foundation", name = "foundation-layout-android", version.ref = "foundationLayoutAndroidVersion" }
+androidx-navigation-runtime-android = { group = "androidx.navigation", name = "navigation-runtime-android", version.ref = "navigationRuntimeAndroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

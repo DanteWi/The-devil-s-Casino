@@ -1,5 +1,4 @@
 package com.example.devilcasinodemo.paginas
-
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -13,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,17 +29,23 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.devilcasinodemo.R
 import com.example.devilcasinodemo.ui.theme.DevilCasinoDemoTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NeonLoginScreen() {
+fun Login(navController: NavHostController) {
     val neonOrange = Color(0xFFFF6600)
     val backgroundColor = Color(0xFF0C0602)
 
@@ -140,14 +146,37 @@ fun NeonLoginScreen() {
                         contentScale = ContentScale.Fit
                     )
                 }
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    text = "New here? Come with me "
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+
+
+                ClickableText(
+                    text = AnnotatedString(
+                        text = "Welcome sinner",
+                    ),
+                    style = LocalTextStyle.current.copy(
+                        color = Color.Red,
+                        textDecoration = TextDecoration.Underline,
+                        textAlign = TextAlign.Center,
+                        shadow = Shadow(color = Color.Red, blurRadius = 8f)
+                    ),
+                    onClick = {navController.navigate("crearuser")}
+                )
             }
         }
     }
+
 }
 @Preview(showBackground = true)
 @Composable
-fun Preview() {
+fun PreviewNeonLoginScreen() {
     DevilCasinoDemoTheme {
-        NeonLoginScreen()
+        // Create a dummy NavController for preview
+        val navController = rememberNavController()
+        Login(navController = navController)
     }
 }

@@ -68,6 +68,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.foundation.layout.android)
+    implementation(libs.androidx.navigation.runtime.android)
 
 
     // Testing
