@@ -17,7 +17,7 @@ fun ErrorScreen() {
     ) {
         // Background Image
         Image(
-            painter = painterResource(id = R.drawable._1f32a16_bce6_4da3_9bc1_b0188d2a0b2d),
+            painter = painterResource(id = R.drawable.nowifi),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop

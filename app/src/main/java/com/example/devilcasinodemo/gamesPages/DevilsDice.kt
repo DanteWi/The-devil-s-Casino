@@ -8,11 +8,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.devilcasinodemo.R
 import com.example.devilcasinodemo.ui.theme.DevilCasinoDemoTheme
 
 @Composable
-fun DevilDicesScreen() {
+fun DevilDicesScreen(navController: NavHostController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -32,6 +34,7 @@ fun DevilDicesScreen() {
 @Composable
 fun PreviewDD() {
     DevilCasinoDemoTheme {
-        DevilDicesScreen()
+        val navController = rememberNavController()
+        DevilDicesScreen(navController)
     }
 }

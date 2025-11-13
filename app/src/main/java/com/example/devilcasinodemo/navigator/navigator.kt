@@ -5,6 +5,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.devilcasinodemo.gamesPages.BlackjackScreen
+import com.example.devilcasinodemo.gamesPages.DevilDicesScreen
 import com.example.devilcasinodemo.paginas.CreateAccountScreen
 import com.example.devilcasinodemo.paginas.Lobby
 import com.example.devilcasinodemo.paginas.Login
@@ -27,6 +29,8 @@ fun AppNavHost(
         composable("user") { User(navController) }
         composable("wallet") { Wallet(navController) }
         composable("lobby") { Lobby(navController) }
+        composable("blackjack") { BlackjackScreen(navController) }
+        composable("liars_dice") { DevilDicesScreen(navController) }
     }
 }
 

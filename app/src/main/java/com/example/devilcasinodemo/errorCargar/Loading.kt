@@ -42,7 +42,7 @@ fun LoadingScreen() {
             Spacer(modifier = Modifier.weight(1f))
 
             AsyncImage(
-                model  =  R.drawable.dgcrm1j_d353160c_45c3_4bca_87e3_aaafccfd9bd4,
+                model  =  R.drawable.fier,
                 contentDescription = "Loading",
                 modifier = Modifier
                     .height(199.dp)
