@@ -51,6 +51,8 @@ fun Login(navController: NavHostController) {
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    val emailRegex = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")
+    var emailError by remember { mutableStateOf(false) }
 
     Surface(
         modifier = Modifier

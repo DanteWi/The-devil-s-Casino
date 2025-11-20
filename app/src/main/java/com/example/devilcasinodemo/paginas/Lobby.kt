@@ -117,16 +117,7 @@ fun GlowingText(
     fontWeight: FontWeight,
     modifier: Modifier = Modifier
 ) {
-    // Animate alpha for pulsing glow
-    val infiniteTransition = rememberInfiniteTransition()
-    val alpha by infiniteTransition.animateFloat(
-        initialValue = 0.5f,
-        targetValue = 1f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(1000, easing = LinearEasing),
-            repeatMode = RepeatMode.Reverse
-        )
-    )
+    
 
     Text(
         text = text,
@@ -139,7 +130,6 @@ fun GlowingText(
                 shadowElevation = 16f
                 shape = RoundedCornerShape(4.dp)
                 clip = false
-
             }
     )
 }
