@@ -1,23 +1,33 @@
 package com.example.devilcasinodemo.paginas
 
-import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -31,10 +41,12 @@ data class Game(
 
 @Composable
 fun Lobby(navController: NavHostController) {
+    val scrollState = rememberScrollState()
 
     val games = listOf(
         Game("Blackjack", R.drawable.blackjackimage, "blackjack"),
-        Game("Liars Dice", R.drawable.dicegameimage, "liars_dice")
+        Game("Liars Dice", R.drawable.dicegameimage, "liars_dice"),
+
     )
 
     Column(
@@ -44,18 +56,28 @@ fun Lobby(navController: NavHostController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Text(
+        NeonText(
             text = "Welcome to the Devil's Casino",
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(bottom = 16.dp)
+            color = Color(0xFFFFE082),
+            fontSize = 30.sp
         )
 
-        Column(
+        Spacer(modifier = Modifier.padding(20.dp))
+
+
+        NeonText(
+            text = "username",
+            color = Color(0xFFFFE082),
+            fontSize = 24.sp
+        )
+
+        Row(
             modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .fillMaxWidth()
+                .horizontalScroll(scrollState)
+                .padding(vertical = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             games.forEach { game ->
                 GameItem(game = game) {
@@ -63,14 +85,15 @@ fun Lobby(navController: NavHostController) {
                 }
             }
         }
-
+        Spacer(modifier = Modifier.weight(1f))
         // Glowing blood-red pulsing text
-        GlowingText(
+        Text(
             text = "The devil is preparing more tricks, but for now you only get this sinner",
             color = Color.Red,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(top = 16.dp)
+            modifier = Modifier.padding(top = 16.dp),
+            textAlign = TextAlign.Center
         )
     }
 }
@@ -79,8 +102,7 @@ fun Lobby(navController: NavHostController) {
 fun GameItem(game: Game, onClick: () -> Unit) {
     Box(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(150.dp)
+            .size(width = 200.dp, height = 300.dp) // Adjust size as needed
             .shadow(8.dp, RoundedCornerShape(12.dp))
             .clickable { onClick() }
             .background(Color.DarkGray, RoundedCornerShape(12.dp)),
@@ -89,47 +111,28 @@ fun GameItem(game: Game, onClick: () -> Unit) {
         Image(
             painter = painterResource(id = game.imageRes),
             contentDescription = game.name,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(8.dp)
-        )
-        Text(
-            text = game.name,
-            color = Color.White,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .background(Color(0x80000000))
-                .fillMaxWidth()
-                .padding(8.dp),
-            textAlign = TextAlign.Center
+            contentScale = ContentScale.FillBounds,
+            modifier = Modifier.fillMaxSize()
         )
     }
 }
 
+
 @Composable
-fun GlowingText(
+fun NeonText(
     text: String,
     color: Color,
-    fontSize: androidx.compose.ui.unit.TextUnit,
-    fontWeight: FontWeight,
-    modifier: Modifier = Modifier
+    fontSize: TextUnit
 ) {
-    
-
     Text(
         text = text,
         color = color,
         fontSize = fontSize,
-        fontWeight = fontWeight,
-        textAlign = TextAlign.Center,
-        modifier = modifier
-            .graphicsLayer {
-                shadowElevation = 16f
-                shape = RoundedCornerShape(4.dp)
-                clip = false
-            }
+        style = TextStyle(
+            shadow = Shadow(
+                color = color.copy(alpha = 0.9f),
+                blurRadius = 20f
+            )
+        )
     )
 }

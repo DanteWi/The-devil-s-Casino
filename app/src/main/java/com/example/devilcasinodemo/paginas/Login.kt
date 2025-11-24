@@ -90,16 +90,30 @@ fun Login(navController: NavHostController) {
             ) {
                 OutlinedTextField(
                     value = email,
-                    onValueChange = { email = it },
+                    onValueChange = {
+                        email = it
+                        emailError = !emailRegex.matches(email)
+                    },
                     label = { Text("Email", color = neonOrange) },
                     textStyle = LocalTextStyle.current.copy(color = neonOrange),
+                    isError = emailError,
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = neonOrange,
                         unfocusedBorderColor = neonOrange,
-                        cursorColor = neonOrange
+                        cursorColor = neonOrange,
+                        errorBorderColor = Color.Red
                     ),
                     modifier = Modifier.fillMaxWidth()
                 )
+
+                if (emailError) {
+                    Text(
+                        text = "Email inválido",
+                        color = Color.Red,
+                        modifier = Modifier.align(Alignment.Start).padding(start = 8.dp, top = 4.dp)
+                    )
+                }
+
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -120,20 +134,31 @@ fun Login(navController: NavHostController) {
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Button(
-                    onClick = { /* login */ },
+                    onClick = {
+                        if (!emailError && email.isNotBlank() && password.isNotBlank()) {
+                            navController.navigate("lobby") {
+                                popUpTo("login") { inclusive = true }
+                            }
+
+                        }
+                    },
                     colors = ButtonDefaults.buttonColors(containerColor = neonOrange),
+                    enabled = !emailError && email.isNotBlank()&& password.isNotBlank(),
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp)
                 ) {
-                    Text("Login", color = Color.Black, )
+                    Text("Login", color = Color.Black)
                 }
+
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Button(
-                    onClick = { /* Google to implemt */ },
+                    onClick = { navController.navigate("lobby") {
+                        popUpTo("login") { inclusive = true }
+                    } },
                     colors = ButtonDefaults.buttonColors(containerColor = neonOrange),
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier
@@ -166,7 +191,7 @@ fun Login(navController: NavHostController) {
                         textAlign = TextAlign.Center,
                         shadow = Shadow(color = Color.Red, blurRadius = 8f)
                     ),
-                    onClick = {navController.navigate("crearuser")}
+                    onClick = {navController.navigate("create_user")}
                 )
             }
         }

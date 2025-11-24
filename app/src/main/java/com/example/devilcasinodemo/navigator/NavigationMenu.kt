@@ -5,73 +5,67 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBalanceWallet
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Place
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.devilcasinodemo.ui.theme.DevilCasinoDemoTheme
 
 @Composable
-fun NavigatorMenu(modifier: Modifier = Modifier) {
-    val navController = rememberNavController()
-    var selectedDestination by rememberSaveable { mutableIntStateOf(0) }
+fun NavigatorMenu(navController: NavHostController) {
 
-    val destinations = listOf(
+    val bottomBarRoutes = listOf("lobby", "user", "wallet")
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
+    val bottomBarItems = listOf(
         BottomNavDestination("User", "user", Icons.Default.Person),
         BottomNavDestination("Lobby", "lobby", Icons.Default.Home),
-        BottomNavDestination("Wallet", "wallet", Icons.Default.AccountBalanceWallet),
+        BottomNavDestination("Wallet", "wallet", Icons.Default.AccountBalanceWallet)
+    )
 
-        )
+    var selectedIndex by rememberSaveable { mutableIntStateOf(0) }
 
     Scaffold(
-        modifier = modifier,
         bottomBar = {
-            NavigationBar(windowInsets = NavigationBarDefaults.windowInsets,containerColor = Color(0xFFDC143C)) {
-                destinations.forEachIndexed { index, destination ->
-                    NavigationBarItem(
-
-                        selected = selectedDestination == index,
-                        onClick = {
-                            navController.navigate(destination.route)
-                            selectedDestination = index
-                        },
-                        icon = {
-                            Icon(
-                                destination.icon,
-                                contentDescription = destination.label
-                            )
-                        },
-                        label = { Text(destination.label) },
-                        alwaysShowLabel = true,
-                        colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = Color(0xFFFF9800),       // Black icon when selected
-                            selectedTextColor = Color(0xFFFF9800),       // Black text when selected
-                            unselectedIconColor = Color.Black.copy(alpha = 0.6f),  // Slightly faded black when unselected
-                            unselectedTextColor = Color.Black.copy(alpha = 0.6f)
+            if (currentRoute in bottomBarRoutes) {
+                NavigationBar(containerColor = Color(0xFFDC143C)) {
+                    bottomBarItems.forEachIndexed { index, item ->
+                        NavigationBarItem(
+                            selected = selectedIndex == index,
+                            onClick = {
+                                navController.navigate(item.route) {
+                                    launchSingleTop = true
+                                }
+                                selectedIndex = index
+                            },
+                            icon = { Icon(item.icon, item.label) },
+                            label = { Text(item.label) }
                         )
-                    )
+                    }
                 }
             }
         }
-    ) { contentPadding ->
+    ) { padding ->
         AppNavHost(
             navController = navController,
-            startDestination = destinations[selectedDestination].route,
-            modifier = Modifier.padding(contentPadding)
+            startDestination = "login",
+            modifier = Modifier.padding(padding)
         )
     }
 }
-
 
 
 
@@ -79,6 +73,8 @@ fun NavigatorMenu(modifier: Modifier = Modifier) {
 @Composable
 fun Preview556() {
     DevilCasinoDemoTheme {
-        NavigatorMenu()
+        // Create a dummy NavController for preview
+        val navController = rememberNavController()
+        NavigatorMenu(navController = navController, )
     }
 }
