@@ -62,6 +62,14 @@ fun CreateAccountScreen(navController: NavHostController) {
     var rpassword by remember { mutableStateOf("") }
     var checked by remember { mutableStateOf(false) }
     var showDialog by remember { mutableStateOf(false) }
+    var userError by remember { mutableStateOf(false) }
+    var emailError by remember { mutableStateOf(false) }
+    var passwordError by remember { mutableStateOf(false) }
+    var rpasswordError by remember { mutableStateOf(false) }
+
+    val emailRegex = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")
+    val formIsValid = !userError && !emailError && !passwordError && !rpasswordError && checked && user.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && rpassword.isNotEmpty()
+
 
     Surface(
         modifier = Modifier
@@ -72,7 +80,8 @@ fun CreateAccountScreen(navController: NavHostController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(24.dp),
+                .padding(24.dp)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -95,76 +104,137 @@ fun CreateAccountScreen(navController: NavHostController) {
                     .padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
+                // User name
                 OutlinedTextField(
                     value = user,
-                    onValueChange = { user = it },
+                    onValueChange = {
+                        user = it
+                        userError = user.isBlank()
+                    },
                     label = { Text("User Name", color = neonOrange) },
                     textStyle = LocalTextStyle.current.copy(color = neonOrange),
+                    isError = userError,
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = neonOrange,
                         unfocusedBorderColor = neonOrange,
-                        cursorColor = neonOrange
+                        cursorColor = neonOrange,
+                        errorBorderColor = Color.Red
                     ),
                     modifier = Modifier.fillMaxWidth()
                 )
+
+                if (userError) {
+                    Text(
+                        text = "El usuario no puede estar vacío",
+                        color = Color.Red,
+                        modifier = Modifier.align(Alignment.Start)
+                            .padding(start = 8.dp, top = 4.dp)
+                    )
+                }
+
                 Spacer(modifier = Modifier.height(16.dp))
 
+                // Emai
                 OutlinedTextField(
                     value = email,
-                    onValueChange = { email = it },
+                    onValueChange = {
+                        email = it
+                        emailError = !emailRegex.matches(email)
+                    },
                     label = { Text("Email", color = neonOrange) },
                     textStyle = LocalTextStyle.current.copy(color = neonOrange),
+                    isError = emailError,
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = neonOrange,
                         unfocusedBorderColor = neonOrange,
-                        cursorColor = neonOrange
+                        cursorColor = neonOrange,
+                        errorBorderColor = Color.Red
                     ),
                     modifier = Modifier.fillMaxWidth()
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                if (emailError) {
+                    Text(
+                        text = "Email inválido",
+                        color = Color.Red,
+                        modifier = Modifier.align(Alignment.Start)
+                            .padding(start = 8.dp, top = 4.dp)
+                    )
+                }
 
+
+                Spacer(modifier = Modifier.height(16.dp))
+                // Password
                 OutlinedTextField(
                     value = password,
-                    onValueChange = { password = it },
+                    onValueChange = {
+                        password = it
+                        passwordError = password.length < 6
+                    },
                     label = { Text("Password", color = neonOrange) },
                     textStyle = LocalTextStyle.current.copy(color = neonOrange),
                     visualTransformation = PasswordVisualTransformation(),
+                    isError = passwordError,
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = neonOrange,
                         unfocusedBorderColor = neonOrange,
-                        cursorColor = neonOrange
+                        cursorColor = neonOrange,
+                        errorBorderColor = Color.Red
                     ),
                     modifier = Modifier.fillMaxWidth()
                 )
+
+                if (passwordError) {
+                    Text(
+                        text = "La contraseña debe tener al menos 6 caracteres",
+                        color = Color.Red,
+                        modifier = Modifier.align(Alignment.Start)
+                            .padding(start = 8.dp, top = 4.dp)
+                    )
+                }
+
 
                 Spacer(modifier = Modifier.height(16.dp))
 
+                //Password repeated
                 OutlinedTextField(
                     value = rpassword,
-                    onValueChange = { rpassword = it },
+                    onValueChange = {
+                        rpassword = it
+                        rpasswordError = rpassword != password
+                    },
                     label = { Text("Repeat Password", color = neonOrange) },
                     textStyle = LocalTextStyle.current.copy(color = neonOrange),
                     visualTransformation = PasswordVisualTransformation(),
+                    isError = rpasswordError,
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = neonOrange,
                         unfocusedBorderColor = neonOrange,
-                        cursorColor = neonOrange
+                        cursorColor = neonOrange,
+                        errorBorderColor = Color.Red
                     ),
                     modifier = Modifier.fillMaxWidth()
                 )
+
+                if (rpasswordError) {
+                    Text(
+                        text = "Las contraseñas no coinciden",
+                        color = Color.Red,
+                        modifier = Modifier.align(Alignment.Start)
+                            .padding(start = 8.dp, top = 4.dp)
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Button(
-                    onClick = { /* login */ },
+                    onClick = { /* create account */ },
                     colors = ButtonDefaults.buttonColors(containerColor = neonOrange),
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp),
-                    enabled = checked
+                    enabled = formIsValid
                 ) {
                     Text("Create Account", color = Color.Black, fontWeight = FontWeight.Bold)
                 }
