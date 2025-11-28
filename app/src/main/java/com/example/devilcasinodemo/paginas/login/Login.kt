@@ -1,4 +1,4 @@
-package com.example.devilcasinodemo.paginas
+package com.example.devilcasinodemo.paginas.login
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

@@ -1,4 +1,4 @@
-package com.example.devilcasinodemo.gamesPages
+package com.example.devilcasinodemo.paginas.gamesPages
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box

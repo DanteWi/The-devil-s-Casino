@@ -1,17 +1,17 @@
 package com.example.devilcasinodemo.navigator
 
+import Wallet
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.devilcasinodemo.gamesPages.BlackjackScreen
-import com.example.devilcasinodemo.gamesPages.DevilDicesScreen
-import com.example.devilcasinodemo.paginas.CreateAccountScreen
-import com.example.devilcasinodemo.paginas.Lobby
-import com.example.devilcasinodemo.paginas.Login
-import com.example.devilcasinodemo.paginas.User
-import com.example.devilcasinodemo.paginas.Wallet
+import com.example.devilcasinodemo.paginas.gamesPages.BlackjackScreen
+import com.example.devilcasinodemo.paginas.gamesPages.DevilDicesScreen
+import com.example.devilcasinodemo.paginas.login.CreateAccountScreen
+import com.example.devilcasinodemo.paginas.lobby.Lobby
+import com.example.devilcasinodemo.paginas.login.Login
+import com.example.devilcasinodemo.paginas.lobby.User
 
 @Composable
 fun AppNavHost(navController: NavHostController, startDestination: String, modifier: Modifier) {
