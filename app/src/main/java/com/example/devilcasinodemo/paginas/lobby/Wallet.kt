@@ -52,7 +52,6 @@ fun Wallet(navController: NavHostController) {
                 }
 
 
-                // Paid 1000 — no timer
                 ShopCard(
                     amount = "1000",
                     price = "1.99$",
@@ -64,7 +63,6 @@ fun Wallet(navController: NavHostController) {
 
             Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
 
-                // Paid 10000 — no timer
                 ShopCard(
                     amount = "10000",
                     price = "15$",
@@ -73,7 +71,6 @@ fun Wallet(navController: NavHostController) {
                     // Handle purchase
                 }
 
-                // Free 100k — no timer (assuming this is a paid one based on price)
                 ShopCard(
                     amount = "100000",
                     price = "$99.99",  // Added $ for consistency

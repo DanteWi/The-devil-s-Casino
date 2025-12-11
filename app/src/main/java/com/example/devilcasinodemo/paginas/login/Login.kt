@@ -41,16 +41,19 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.devilcasinodemo.R
+import com.example.devilcasinodemo.mvc.LoginViewModel
 import com.example.devilcasinodemo.ui.theme.DevilCasinoDemoTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Login(navController: NavHostController) {
+fun Login(navController: NavHostController, viewModel: LoginViewModel = LoginViewModel()) {
     val neonOrange = Color(0xFFFF6600)
     val backgroundColor = Color(0xFF0C0602)
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var message by remember { mutableStateOf("") }
+
     val emailRegex = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")
     var emailError by remember { mutableStateOf(false) }
 
@@ -67,20 +70,22 @@ fun Login(navController: NavHostController) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(painter = painterResource(id = R.drawable._7e8780e_f2a5_4a66_9a91_b81658c397f3),
+            // Logo
+            Image(
+                painter = painterResource(id = R.drawable._7e8780e_f2a5_4a66_9a91_b81658c397f3),
                 contentDescription = "Login Sign",
                 modifier = Modifier.padding(10.dp),
                 contentScale = ContentScale.Fit
             )
+
             Text(
-
-                text="Welcome back Sinner",
+                text = "Welcome back Sinner",
                 color = Color.Red
-
             )
 
             Spacer(modifier = Modifier.height(32.dp))
 
+            // Form
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -88,6 +93,7 @@ fun Login(navController: NavHostController) {
                     .padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                // Email Field
                 OutlinedTextField(
                     value = email,
                     onValueChange = {
@@ -114,9 +120,9 @@ fun Login(navController: NavHostController) {
                     )
                 }
 
-
                 Spacer(modifier = Modifier.height(16.dp))
 
+                // Password Field
                 OutlinedTextField(
                     value = password,
                     onValueChange = { password = it },
@@ -131,19 +137,43 @@ fun Login(navController: NavHostController) {
                     modifier = Modifier.fillMaxWidth()
                 )
 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
+                // Message display
+                if (message.isNotEmpty()) {
+                    Text(
+                        text = message,
+                        color = if (message == "Login correcto") Color.Green else Color.Red,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Login Button
                 Button(
                     onClick = {
                         if (!emailError && email.isNotBlank() && password.isNotBlank()) {
-                            navController.navigate("lobby") {
-                                popUpTo("login") { inclusive = true }
+                            message = "Conectando..."
+                            viewModel.login(email, password) { success, errorMessage ->
+                                message = when {
+                                    success -> {
+                                        // Navigate to lobby only on success
+                                        navController.navigate("lobby") {
+                                            popUpTo("login") { inclusive = true }
+                                        }
+                                        "Login correcto"
+                                    }
+                                    errorMessage != null -> errorMessage
+                                    else -> "Error desconocido"
+                                }
                             }
-
+                        } else {
+                            message = "Rellena todos los campos correctamente"
                         }
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = neonOrange),
-                    enabled = !emailError && email.isNotBlank()&& password.isNotBlank(),
+                    enabled = !emailError && email.isNotBlank() && password.isNotBlank(),
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -152,52 +182,49 @@ fun Login(navController: NavHostController) {
                     Text("Login", color = Color.Black)
                 }
 
-
                 Spacer(modifier = Modifier.height(16.dp))
 
+                // Optional Google Login Button
                 Button(
-                    onClick = { navController.navigate("lobby") {
-                        popUpTo("login") { inclusive = true }
-                    } },
+                    onClick = {
+                        navController.navigate("test_login") {
+                            popUpTo("login") { inclusive = true }
+                        }
+                    },
                     colors = ButtonDefaults.buttonColors(containerColor = neonOrange),
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp)
                 ) {
-                    Image(painter = painterResource(id = R.drawable.google__g__logo_svg),
+                    Image(
+                        painter = painterResource(id = R.drawable.google__g__logo_svg),
                         contentDescription = "Google Logo",
-                        modifier = Modifier.
-                        fillMaxWidth()
-                            .fillMaxHeight(),
+                        modifier = Modifier.fillMaxWidth().fillMaxHeight(),
                         contentScale = ContentScale.Fit
                     )
                 }
+
                 Spacer(modifier = Modifier.height(16.dp))
 
-                Text(
-                    text = "New here? Come with me "
-                )
+                Text(text = "New here? Come with me ")
                 Spacer(modifier = Modifier.height(16.dp))
-
 
                 ClickableText(
-                    text = AnnotatedString(
-                        text = "Welcome sinner",
-                    ),
+                    text = AnnotatedString(text = "Welcome sinner"),
                     style = LocalTextStyle.current.copy(
                         color = Color.Red,
                         textDecoration = TextDecoration.Underline,
                         textAlign = TextAlign.Center,
                         shadow = Shadow(color = Color.Red, blurRadius = 8f)
                     ),
-                    onClick = {navController.navigate("create_user")}
+                    onClick = { navController.navigate("create_user") }
                 )
             }
         }
     }
-
 }
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewNeonLoginScreen() {

@@ -29,55 +29,74 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
     buildFeatures {
         compose = true
     }
+
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
+
     packaging {
         resources {
+            // Exclude unnecessary license files
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+
+            // Pick the first occurrence of common duplicate files
+            pickFirsts += listOf(
+                "META-INF/INDEX.LIST",
+                "META-INF/DEPENDENCIES",
+                "META-INF/io.netty.versions.properties"
+            )
         }
     }
-}
-
-dependencies {
-    // Coil
-    implementation("io.coil-kt:coil-compose:2.6.0")
-    implementation("io.coil-kt:coil-gif:2.6.0")
-
-    // Compose (BOM keeps versions consistent)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.material:material-icons-extended")
-    implementation("androidx.navigation:navigation-compose:2.8.0")
-    implementation("androidx.compose.foundation:foundation")
-
-    // AndroidX core + lifecycle
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.foundation.layout.android)
-    implementation(libs.androidx.navigation.runtime.android)
 
 
-    // Testing
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+
+    dependencies {
+        // Coil
+        implementation("io.coil-kt:coil-compose:2.6.0")
+        implementation("io.coil-kt:coil-gif:2.6.0")
+
+        // Compose (BOM keeps versions consistent)
+        implementation(platform(libs.androidx.compose.bom))
+        implementation("androidx.compose.ui:ui")
+        implementation("androidx.compose.ui:ui-tooling-preview")
+        implementation("androidx.compose.material3:material3")
+        implementation("androidx.compose.material:material-icons-extended")
+        implementation("androidx.navigation:navigation-compose:2.8.0")
+        implementation("androidx.compose.foundation:foundation")
+
+        // AndroidX core + lifecycle
+        implementation(libs.androidx.core.ktx)
+        implementation(libs.androidx.lifecycle.runtime.ktx)
+        implementation(libs.androidx.activity.compose)
+        implementation(libs.foundation.layout.android)
+        implementation(libs.androidx.navigation.runtime.android)
+        implementation(libs.firebase.appdistribution.gradle)
+
+
+        // Testing
+        testImplementation(libs.junit)
+        androidTestImplementation(libs.androidx.junit)
+        androidTestImplementation(libs.androidx.espresso.core)
+        androidTestImplementation(platform(libs.androidx.compose.bom))
+        androidTestImplementation(libs.androidx.ui.test.junit4)
+        debugImplementation(libs.androidx.ui.tooling)
+        debugImplementation(libs.androidx.ui.test.manifest)
+
+        implementation(libs.retrofit)
+        implementation(libs.converter.gson)
+    }
 }
 
