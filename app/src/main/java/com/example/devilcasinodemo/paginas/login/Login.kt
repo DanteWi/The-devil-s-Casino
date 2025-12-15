@@ -11,8 +11,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -53,7 +55,7 @@ fun Login(navController: NavHostController, viewModel: LoginViewModel = LoginVie
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var message by remember { mutableStateOf("") }
-
+    val scrollState = rememberScrollState()
     val emailRegex = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")
     var emailError by remember { mutableStateOf(false) }
 
@@ -66,7 +68,8 @@ fun Login(navController: NavHostController, viewModel: LoginViewModel = LoginVie
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(20.dp),
+                .padding(20.dp)
+                .verticalScroll(scrollState),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -158,7 +161,6 @@ fun Login(navController: NavHostController, viewModel: LoginViewModel = LoginVie
                             viewModel.login(email, password) { success, errorMessage ->
                                 message = when {
                                     success -> {
-                                        // Navigate to lobby only on success
                                         navController.navigate("lobby") {
                                             popUpTo("login") { inclusive = true }
                                         }

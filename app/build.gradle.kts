@@ -99,4 +99,7 @@ android {
         implementation(libs.converter.gson)
     }
 }
+dependencies {
+    implementation(libs.androidx.foundation.android)
+}
 

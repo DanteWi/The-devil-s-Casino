@@ -30,8 +30,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.devilcasinodemo.R
+import com.example.devilcasinodemo.mvc.LoginViewModel
 
 data class Game(
     val name: String,
@@ -40,15 +42,14 @@ data class Game(
 )
 
 @Composable
-fun Lobby(navController: NavHostController) {
+fun Lobby(navController: NavHostController, loginViewModel: LoginViewModel) {
     val scrollState = rememberScrollState()
-
     val games = listOf(
         Game("Blackjack", R.drawable.blackjackimage, "blackjack"),
         Game("Liars Dice", R.drawable.dicegameimage, "liars_dice"),
 
     )
-
+    val userId = loginViewModel.userId
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -66,7 +67,7 @@ fun Lobby(navController: NavHostController) {
 
 
         NeonText(
-            text = "username",
+            text = userId?.toString() ?: "Unknown user",
             color = Color(0xFFFFE082),
             fontSize = 24.sp
         )
