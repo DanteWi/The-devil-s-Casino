@@ -5,7 +5,7 @@
 ### Added
 
 * Blackjack completamente funcional.
-* Conexión Frontend (Android) ↔ Backend (Spring Boot).
+* Conexión Frontend (Android) <-> Backend (Spring Boot).
 * API REST para el juego de Blackjack.
 * Sistema de apuestas con Devil Coins (DC).
 * Wallet persistente en base de datos MySQL.
