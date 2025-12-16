@@ -9,7 +9,6 @@ import com.example.devilcasinodemo.mvc.conexion.BlackjackState
 import com.example.devilcasinodemo.mvc.conexion.StartGameRequest
 import com.example.devilcasinodemo.retrofit.ApiClient
 import com.example.devilcasinodemo.retrofit.ApiService
-import com.example.devilcasinodemo.retrofit.BlackjackApi
 import kotlinx.coroutines.launch
 
 class BlackjackViewModel(

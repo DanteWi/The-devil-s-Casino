@@ -36,16 +36,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.devilcasinodemo.R
 import com.example.devilcasinodemo.mvc.BlackjackViewModel
 import com.example.devilcasinodemo.mvc.conexion.BlackjackState
-import com.example.devilcasinodemo.ui.theme.DevilCasinoDemoTheme
+
 
 @Composable
 fun BlackjackScreen(
@@ -56,12 +54,22 @@ fun BlackjackScreen(
 
     var showBetDialog by remember { mutableStateOf(true) }
     var betAmount by remember { mutableStateOf("10") }
+    var loading by remember { mutableStateOf(false) }
 
     val state = viewModel.gameState
+    val canHit = state?.playerTotal ?: 0 < 21 && !(state?.finished ?: false)
+    val canStand = !(state?.finished ?: false)
 
-    // Start game ONLY after bet confirmation
+    // For dealer animation
+    var dealerVisible by remember { mutableStateOf(false) }
+    var dealerCardsAnimated by remember { mutableStateOf(listOf<String>()) }
+
+    // Start game
     fun startGame() {
         val bet = betAmount.toDoubleOrNull() ?: return
+        loading = true
+        dealerVisible = false
+        dealerCardsAnimated = emptyList()
         viewModel.startGame(userId, bet)
         showBetDialog = false
     }
@@ -89,7 +97,6 @@ fun BlackjackScreen(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-
                     Text(
                         text = "Enter your bet amount",
                         color = Color.White,
@@ -108,12 +115,7 @@ fun BlackjackScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 8.dp),
-                        label = {
-                            Text(
-                                "Bet Amount",
-                                fontSize = 14.sp
-                            )
-                        }
+                        label = { Text("Bet Amount", fontSize = 14.sp) }
                     )
                 }
             },
@@ -136,24 +138,53 @@ fun BlackjackScreen(
         )
     }
 
-
-    //  MAIN GAME
+    // MAIN GAME
     if (!showBetDialog && state != null) {
-        BlackjackTable(
-            state = state,
-            onHit = { viewModel.hit(userId) },
-            onStand = { viewModel.stand(userId) },
-            onChipClick = { chip ->
-                betAmount = (betAmount.toInt() + chip).toString()
+
+        // Animate dealer after player stands
+        LaunchedEffect(state.finished) {
+            if (state.finished && state.status != "PLAYER_BUST") {
+                dealerVisible = true
+                dealerCardsAnimated = emptyList()
+
+                // Simulate dealer drawing cards one by one
+                state.dealerCards.forEachIndexed { index, card ->
+                    dealerCardsAnimated = state.dealerCards.take(index + 1)
+                    kotlinx.coroutines.delay(800) // 0.8 seconds per card
+                }
+            } else if (state.status == "PLAYER_BUST") {
+                dealerVisible = false
             }
+        }
+
+        BlackjackTable(
+            state = state.copy(
+                dealerCards = if (dealerVisible) dealerCardsAnimated else emptyList()
+            ),
+            onHit = {
+                if (canHit && !loading) {
+                    loading = true
+                    viewModel.hit(userId)
+                }
+            },
+            onStand = {
+                if (canStand && !loading) {
+                    loading = true
+                    viewModel.stand(userId)
+                }
+            },
+            onChipClick = { chip -> betAmount = (betAmount.toInt() + chip).toString() }
         )
     }
 
+    // END GAME
+    // END GAME
+    val showEndGamePopup = state?.finished == true &&
+            (state.status == "PLAYER_BUST" ||
+                    (dealerVisible && dealerCardsAnimated.size == state.dealerCards.size))
 
-    //  END GAME
-    if (state?.finished == true) {
-
-        val isWin = state.status == "PLAYER_WIN" || state.status == "PUSH"
+    if (showEndGamePopup) {
+        val isWin = state?.status == "PLAYER_WIN" || state?.status == "PUSH"
 
         Box(
             modifier = Modifier
@@ -161,7 +192,6 @@ fun BlackjackScreen(
                 .background(Color.Black.copy(alpha = 0.9f)),
             contentAlignment = Alignment.Center
         ) {
-
             Column(
                 modifier = Modifier
                     .fillMaxWidth(0.9f)
@@ -172,8 +202,7 @@ fun BlackjackScreen(
                     .padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
-                // RESULT IMAGE (BIGGER)
+                // RESULT IMAGE
                 Image(
                     painter = painterResource(
                         id = if (isWin) R.drawable.imagewinner else R.drawable.imageloser
@@ -185,7 +214,6 @@ fun BlackjackScreen(
                     contentScale = ContentScale.Fit
                 )
 
-                // RESULT TEXT
                 Text(
                     text = if (isWin) "YOU WIN!" else "YOU LOST",
                     color = if (isWin) Color(0xFFFFD700) else Color.Red,
@@ -195,35 +223,35 @@ fun BlackjackScreen(
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // STATUS MESSAGE
-                Text(
-                    text = when (state.status) {
-                        "PUSH" -> "It's a push!"
-                        "PLAYER_WIN" -> "You win, for now!😈"
-                        else -> "Dealer wins!"
-                    },
-                    color = Color.White,
-                    fontSize = 18.sp
-                )
+                if (state != null) {
+                    Text(
+                        text = when (state.status) {
+                            "PUSH" -> "It's a push!"
+                            "PLAYER_WIN" -> "You win, for now!😈"
+                            else -> "Dealer wins!"
+                        },
+                        color = Color.White,
+                        fontSize = 18.sp
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // BET AMOUNT
-                Text(
-                    text = "Bet: ${state.bet}",
-                    color = if (isWin) Color(0xFFFFD700) else Color.Red,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                if (state != null) {
+                    Text(
+                        text = "Bet: ${state.bet}",
+                        color = if (isWin) Color(0xFFFFD700) else Color.Red,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // ACTION BUTTONS
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-
                     Button(
                         onClick = {
                             showBetDialog = true
@@ -234,31 +262,33 @@ fun BlackjackScreen(
                             .height(52.dp),
                         shape = RoundedCornerShape(14.dp)
                     ) {
-                        Text(
-                            "PLAY AGAIN",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold
-                        )
+                        Text("PLAY AGAIN", fontSize = 16.sp, fontWeight = FontWeight.Bold)
                     }
 
                     Button(
-                        onClick = { navHostController.navigate("lobby") { popUpTo("blackjack") { inclusive = true } }},
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(52.dp),
-                            shape = RoundedCornerShape(14.dp)
-                            ) {
-                            Text(
-                                "LOBBY",
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-                        }
+                        onClick = {
+                            navHostController.navigate("lobby") {
+                                popUpTo("blackjack") { inclusive = true }
+                            }
+                        },
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(52.dp),
+                        shape = RoundedCornerShape(14.dp)
+                    ) {
+                        Text("LOBBY", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                    }
                 }
             }
         }
     }
+
+
+    // Reset loading when state changes
+    LaunchedEffect(state) {
+        loading = false
+    }
+}
 
 
 fun getCardRes(card: String): Int {

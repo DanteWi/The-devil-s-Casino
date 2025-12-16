@@ -4,15 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -30,7 +22,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.devilcasinodemo.R
 import com.example.devilcasinodemo.mvc.LoginViewModel
@@ -47,38 +38,39 @@ fun Lobby(navController: NavHostController, loginViewModel: LoginViewModel) {
     val games = listOf(
         Game("Blackjack", R.drawable.blackjackimage, "blackjack"),
         Game("Liars Dice", R.drawable.dicegameimage, "liars_dice"),
-
     )
     val userId = loginViewModel.userId
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(horizontal = 16.dp, vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
+        // Welcome text
         NeonText(
             text = "Welcome to the Devil's Casino",
             color = Color(0xFFFFE082),
-            fontSize = 30.sp
+            fontSize = 28.sp
         )
 
-        Spacer(modifier = Modifier.padding(20.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
-
+        // User ID
         NeonText(
             text = userId?.toString() ?: "Unknown user",
             color = Color(0xFFFFE082),
-            fontSize = 24.sp
+            fontSize = 22.sp
         )
 
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // Scrollable game list
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .horizontalScroll(scrollState)
-                .padding(vertical = 16.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+                .horizontalScroll(scrollState),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             games.forEach { game ->
                 GameItem(game = game) {
@@ -86,15 +78,19 @@ fun Lobby(navController: NavHostController, loginViewModel: LoginViewModel) {
                 }
             }
         }
+
         Spacer(modifier = Modifier.weight(1f))
-        // Glowing blood-red pulsing text
+
+        // Footer text
         Text(
             text = "The devil is preparing more tricks, but for now you only get this sinner",
             color = Color.Red,
-            fontSize = 20.sp,
+            fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(top = 16.dp),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp)
         )
     }
 }
@@ -103,7 +99,8 @@ fun Lobby(navController: NavHostController, loginViewModel: LoginViewModel) {
 fun GameItem(game: Game, onClick: () -> Unit) {
     Box(
         modifier = Modifier
-            .size(width = 200.dp, height = 300.dp) // Adjust size as needed
+            .widthIn(min = 120.dp, max = 180.dp) // limit width
+            .heightIn(min = 180.dp, max = 250.dp) // limit height
             .shadow(8.dp, RoundedCornerShape(12.dp))
             .clickable { onClick() }
             .background(Color.DarkGray, RoundedCornerShape(12.dp)),
@@ -112,12 +109,11 @@ fun GameItem(game: Game, onClick: () -> Unit) {
         Image(
             painter = painterResource(id = game.imageRes),
             contentDescription = game.name,
-            contentScale = ContentScale.FillBounds,
+            contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
     }
 }
-
 
 @Composable
 fun NeonText(
@@ -134,6 +130,8 @@ fun NeonText(
                 color = color.copy(alpha = 0.9f),
                 blurRadius = 20f
             )
-        )
+        ),
+        textAlign = TextAlign.Center,
+        modifier = Modifier.fillMaxWidth()
     )
 }
