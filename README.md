@@ -3,11 +3,12 @@
 **The Devil’s Casino** es una app de casino en desarrollo hecha con **Android (Jetpack Compose)** y **Spring Boot**.
 ---
 ## Estado del proyecto
-**Versión actual:** `v0.2.0`
+**Versión actual:** `v0.3.0`
 Proyecto en desarrollo.
 ---
 ## Qué tiene ahora
 * Login de usuarios
+* Creacion de nuevos usuarios
 * Navegación entre pantallas
 * Lobby con selección de juegos
 * **Blackjack funcional**
