@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.3.0 - 2026-01-12
+
+### Added
+
+* Crear Usuario functional
+
+### Notes
+* Login roto en el proceso de creacion de nuevo usuario
+
 ## v0.2.0 - 2025-12-13
 
 ### Added
