@@ -44,6 +44,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.devilcasinodemo.R
 import com.example.devilcasinodemo.mvc.LoginViewModel
+import com.example.devilcasinodemo.mvc.RegisterViewModel
 import com.example.devilcasinodemo.ui.theme.DevilCasinoDemoTheme
 
 @OptIn(ExperimentalMaterial3Api::class)

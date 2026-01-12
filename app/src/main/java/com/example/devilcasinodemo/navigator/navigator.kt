@@ -59,11 +59,8 @@ fun AppNavHost(navController: NavHostController, startDestination: String, modif
         }
 
         composable("liars_dice") { DevilDicesScreen(navController) }
-
         composable("wallet") { Wallet(navController) }
-
         composable("create_user") { CreateAccountScreen(navController) }
-
         composable("user") { User(navController) }
     }
 }

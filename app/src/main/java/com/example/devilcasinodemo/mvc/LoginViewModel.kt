@@ -17,25 +17,35 @@ class LoginViewModel : ViewModel() {
     private var loginState: String? = null
         private set
 
-    fun login(email: String, password: String, onResult: (success: Boolean, errorMessage: String?) -> Unit) {
+    var username by mutableStateOf<String?>(null)
+        private set
+
+    fun login(email: String, password: String, onResult: (Boolean, String?) -> Unit) {
         viewModelScope.launch {
             try {
                 val response = ApiClient.api.login(LoginRequest(email, password))
+
                 if (response.isSuccessful && response.body() != null) {
+                    val body = response.body()!!
+
                     loginState = "OK"
-                    // Save userId from backend response
-                    userId = response.body()!!.userId
-                    onResult(true, response.body()!!.message)
+                    userId = body.userId
+                    username = body.name   // or body.username — depending on backend
+
+                    onResult(true, body.message)
+
                 } else {
                     loginState = "ERROR"
                     val message = response.errorBody()?.string() ?: "Credenciales incorrectas"
                     onResult(false, message)
                 }
+
             } catch (e: Exception) {
                 loginState = "NETWORK_ERROR"
                 onResult(false, "No se pudo conectar al servidor: ${e.localizedMessage}")
             }
         }
     }
+
 }
 

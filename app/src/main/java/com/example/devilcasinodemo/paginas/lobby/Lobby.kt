@@ -39,7 +39,7 @@ fun Lobby(navController: NavHostController, loginViewModel: LoginViewModel) {
         Game("Blackjack", R.drawable.blackjackimage, "blackjack"),
         Game("Liars Dice", R.drawable.dicegameimage, "liars_dice"),
     )
-    val userId = loginViewModel.userId
+    val username = loginViewModel.username
 
     Column(
         modifier = Modifier
@@ -48,6 +48,7 @@ fun Lobby(navController: NavHostController, loginViewModel: LoginViewModel) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Welcome text
+        Spacer(Modifier.height(20.dp))
         NeonText(
             text = "Welcome to the Devil's Casino",
             color = Color(0xFFFFE082),
@@ -58,7 +59,7 @@ fun Lobby(navController: NavHostController, loginViewModel: LoginViewModel) {
 
         // User ID
         NeonText(
-            text = userId?.toString() ?: "Unknown user",
+            text = username ?: "Unknown user",
             color = Color(0xFFFFE082),
             fontSize = 22.sp
         )

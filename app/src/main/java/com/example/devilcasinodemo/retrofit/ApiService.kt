@@ -3,6 +3,8 @@ package com.example.devilcasinodemo.retrofit
 import com.example.devilcasinodemo.mvc.conexion.BlackjackState
 import com.example.devilcasinodemo.mvc.conexion.LoginRequest
 import com.example.devilcasinodemo.mvc.conexion.LoginResponse
+import com.example.devilcasinodemo.mvc.conexion.RegisterRequest
+import com.example.devilcasinodemo.mvc.conexion.RegisterResponse
 import com.example.devilcasinodemo.mvc.conexion.StartGameRequest
 import retrofit2.Response
 import retrofit2.http.Body
@@ -14,6 +16,9 @@ interface ApiService {
 
     @POST("api/auth/login")
     suspend fun login(@Body request: LoginRequest): Response<LoginResponse>
+
+    @POST("api/auth/register")
+    suspend fun register(@Body request: RegisterRequest): Response<RegisterResponse>
 
 
     //Blackjack

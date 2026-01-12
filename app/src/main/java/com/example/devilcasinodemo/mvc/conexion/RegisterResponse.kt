@@ -1,7 +1,7 @@
 package com.example.devilcasinodemo.mvc.conexion
 
-data class LoginResponse(
+data class RegisterResponse(
     val message: String,
-    val userId: Long,
-    val name : String
+    val id: Long,
+    val nombre: String
 )
