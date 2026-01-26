@@ -1,6 +1,6 @@
 package com.example.devilcasinodemo.retrofit
 
-import com.example.devilcasinodemo.mvc.conexion.BlackjackState
+import com.example.devilcasinodemo.mvc.dto.BlackjackState
 import retrofit2.http.*
 
 interface BlackjackApi {

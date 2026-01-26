@@ -42,7 +42,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.devilcasinodemo.R
 import com.example.devilcasinodemo.mvc.BlackjackViewModel
-import com.example.devilcasinodemo.mvc.conexion.BlackjackState
+import com.example.devilcasinodemo.mvc.dto.BlackjackState
 
 
 @Composable
@@ -51,14 +51,16 @@ fun BlackjackScreen(
     viewModel: BlackjackViewModel,
     userId: Long
 ) {
+    var showEndGamePopup by remember { mutableStateOf(false) }
 
     var showBetDialog by remember { mutableStateOf(true) }
     var betAmount by remember { mutableStateOf("10") }
     var loading by remember { mutableStateOf(false) }
 
     val state = viewModel.gameState
-    val canHit = state?.playerTotal ?: 0 < 21 && !(state?.finished ?: false)
-    val canStand = !(state?.finished ?: false)
+    val canHit = state.playerTotal < 21 && !state.finished
+    val canStand = !state.finished
+
 
     // For dealer animation
     var dealerVisible by remember { mutableStateOf(false) }
@@ -139,7 +141,7 @@ fun BlackjackScreen(
     }
 
     // MAIN GAME
-    if (!showBetDialog && state != null) {
+    if (!showBetDialog ) {
 
         // Animate dealer after player stands
         LaunchedEffect(state.finished) {
@@ -178,10 +180,15 @@ fun BlackjackScreen(
     }
 
     // END GAME
-    // END GAME
-    val showEndGamePopup = state?.finished == true &&
-            (state.status == "PLAYER_BUST" ||
-                    (dealerVisible && dealerCardsAnimated.size == state.dealerCards.size))
+    LaunchedEffect(state?.status) {
+        if (state?.status == "PLAYER_BUST" || state?.finished == true) {
+            // Wait a bit before showing popup (e.g., 1 second)
+            kotlinx.coroutines.delay(5000)
+            showEndGamePopup = true
+        } else {
+            showEndGamePopup = false
+        }
+    }
 
     if (showEndGamePopup) {
         val isWin = state?.status == "PLAYER_WIN" || state?.status == "PUSH"
@@ -255,7 +262,7 @@ fun BlackjackScreen(
                     Button(
                         onClick = {
                             showBetDialog = true
-                            viewModel.gameState = null
+                            viewModel.resetGame()
                         },
                         modifier = Modifier
                             .weight(1f)

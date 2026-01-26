@@ -20,8 +20,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.devilcasinodemo.mvc.UserStatsViewModel
+import com.example.devilcasinodemo.mvc.dto.UserStatsViewModelFactory
+import com.example.devilcasinodemo.retrofit.ApiClient
+
 // ------------------------------------------------------
 // DATA CLASSES
 // ------------------------------------------------------
@@ -33,10 +36,20 @@ data class CardItem(val name: String, val type: String)
 // ------------------------------------------------------
 
 @Composable
-fun User(navController: NavHostController) {
+fun User(navController: NavHostController, userId: Long) {
 
-    val winPercent = 32.0
-    val losePercent = 20.0
+    val api = remember { ApiClient.api }
+
+    val viewModel: UserStatsViewModel = viewModel(
+        factory = UserStatsViewModelFactory(api)
+    )
+
+    LaunchedEffect(userId) {
+        viewModel.loadStats(userId)
+    }
+
+    val winPercent = viewModel.winRate
+    val losePercent = viewModel.lossRate
 
     // ---------- CARD PICKER STATE ----------
     var showCardDialog by remember { mutableStateOf(false) }
@@ -199,8 +212,16 @@ fun DonutChart(wins: Double, losses: Double, size: Dp) {
         }
 
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("Wins: $wins%", color = Color.White, fontSize = 14.sp)
-            Text("Losses: $losses%", color = Color.White, fontSize = 14.sp)
+            Text(
+                text = "Wins: ${String.format("%.2f", wins)}%",
+                color = Color.White,
+                fontSize = 14.sp
+            )
+            Text(
+                text = "Losses: ${String.format("%.2f", losses)}%",
+                color = Color.White,
+                fontSize = 14.sp
+            )
         }
     }
 }

@@ -2,7 +2,7 @@ package com.example.devilcasinodemo.mvc
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.devilcasinodemo.mvc.conexion.RegisterRequest
+import com.example.devilcasinodemo.mvc.dto.RegisterRequest
 import com.example.devilcasinodemo.retrofit.ApiClient
 import kotlinx.coroutines.launch
 

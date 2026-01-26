@@ -1,3 +1,5 @@
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -29,25 +31,53 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.delay
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.TextButton
+
 import java.util.concurrent.TimeUnit
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun Wallet(navController: NavHostController) {
-    val free100Cooldown = remember { mutableStateOf(0L) }
-    val scrollState = rememberScrollState() // Add scroll state
+fun Wallet(navController: NavHostController, viewModel: WalletViewModel, userId: Long) {
+    val scrollState = rememberScrollState()
+
+    val wallet: WalletViewModel = viewModel
+    val userId = userId ?: return
+
+    LaunchedEffect(userId) {
+        wallet.fetchWallet(userId)
+    }
+
+    val freeCooldown = wallet.freeCooldownMillis
+
+
+    val free100Cooldown = remember { mutableStateOf(freeCooldown) }
+
+    // Keep cooldown in sync with ViewModel
+    LaunchedEffect(freeCooldown) {
+        free100Cooldown.value = freeCooldown
+    }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(scrollState) // Make scrollable
+            .verticalScroll(scrollState)
             .background(Color.Black)
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "userName",
+            text = userId.toString(),
             fontSize = 28.sp,
             color = Color(0xFFFFD700),
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(top = 24.dp)
+        )
+
+        Text(
+            text = "${wallet?.walletAmount ?: 0.0} DC",
+            fontSize = 28.sp,
+            color = Color(0xFFFF3300),
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(top = 24.dp)
         )
@@ -58,15 +88,14 @@ fun Wallet(navController: NavHostController) {
 
             Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
 
-                // Free 100 — timer
+                // Free 100 — timer connected
                 ShopCard(
                     amount = "100",
                     price = "Free",
                     cooldownState = free100Cooldown,
                     borderColor = Color(0xFFCC0000)
                 ) {
-                    free100Cooldown.value =
-                        System.currentTimeMillis() + TimeUnit.HOURS.toMillis(24)
+                    viewModel.claimFree(userId)
                 }
 
                 ShopCard(
@@ -74,8 +103,9 @@ fun Wallet(navController: NavHostController) {
                     price = "1.99$",
                     borderColor = Color(0xFFCC0000)
                 ) {
-                    // Handle paid purchase
+                    viewModel.purchase(userId, 1000.0)
                 }
+
             }
 
             Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
@@ -85,15 +115,15 @@ fun Wallet(navController: NavHostController) {
                     price = "15$",
                     borderColor = Color(0xFFCC0000)
                 ) {
-                    // Handle purchase
+                    viewModel.purchase(userId, 10000.0)
                 }
 
                 ShopCard(
                     amount = "100000",
-                    price = "$99.99",  // Added $ for consistency
+                    price = "$99.99",
                     borderColor = Color(0xFFCC0000)
                 ) {
-                    // Handle purchase
+                    viewModel.purchase(userId, 100000.0)
                 }
             }
         }
@@ -122,15 +152,15 @@ fun ShopCard(
     val cooldown = cooldownState?.value
     val isOnCooldown = cooldown != null && cooldown > System.currentTimeMillis()
 
-    // This drives the 1-second UI updates
     var now by remember { mutableStateOf(System.currentTimeMillis()) }
+    var showConfirm by remember { mutableStateOf(false) }
 
     LaunchedEffect(isOnCooldown) {
         if (isOnCooldown) {
             while (true) {
                 now = System.currentTimeMillis()
                 if (cooldown!! - now <= 0) {
-                    cooldownState?.value = 0L  // Reset cooldown when it expires
+                    cooldownState?.value = 0L
                     break
                 }
                 delay(1000)
@@ -139,6 +169,7 @@ fun ShopCard(
     }
 
     val remainingTime = if (isOnCooldown) formatTime(cooldown!! - now) else null
+    val isFree = price.lowercase() == "free"
 
     val cardColor = if (isOnCooldown) Color.DarkGray else Color(0xFF141212)
     val textAlpha = if (isOnCooldown) 0.5f else 1f
@@ -149,7 +180,13 @@ fun ShopCard(
             .height(200.dp)
             .background(cardColor, RoundedCornerShape(20.dp))
             .border(4.dp, borderColor, RoundedCornerShape(20.dp))
-            .clickable(enabled = !isOnCooldown) { onClick() },
+            .clickable(enabled = !isOnCooldown) {
+                if (isFree) {
+                    onClick()            // Free → instant
+                } else {
+                    showConfirm = true   // Paid → ask confirmation
+                }
+            },
         contentAlignment = Alignment.Center
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -164,4 +201,30 @@ fun ShopCard(
             }
         }
     }
+
+    //  Purchase Confirmation Dialog
+    if (showConfirm) {
+        AlertDialog(
+            onDismissRequest = { showConfirm = false },
+            title = { Text("Confirm Purchase") },
+            text = { Text("Buy $amount DC for $price ?") },
+            confirmButton = {
+                TextButton(onClick = {
+                    showConfirm = false
+                    onClick()
+                }) {
+                    Text("Confirm")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showConfirm = false }) {
+                    Text("Cancel")
+                }
+            },
+            containerColor = Color.Black,
+            titleContentColor = Color(0xFFFFD700),
+            textContentColor = Color.White
+        )
+    }
 }
+

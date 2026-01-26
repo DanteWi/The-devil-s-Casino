@@ -1,4 +1,4 @@
-package com.example.devilcasinodemo.mvc.conexion
+package com.example.devilcasinodemo.mvc.dto
 
 data class RegisterRequest(
     val email: String,

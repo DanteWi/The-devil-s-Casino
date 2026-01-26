@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.devilcasinodemo.retrofit.ApiClient
-import com.example.devilcasinodemo.mvc.conexion.LoginRequest
+import com.example.devilcasinodemo.mvc.dto.LoginRequest
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {

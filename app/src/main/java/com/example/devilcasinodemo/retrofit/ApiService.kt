@@ -1,15 +1,18 @@
 package com.example.devilcasinodemo.retrofit
 
-import com.example.devilcasinodemo.mvc.conexion.BlackjackState
-import com.example.devilcasinodemo.mvc.conexion.LoginRequest
-import com.example.devilcasinodemo.mvc.conexion.LoginResponse
-import com.example.devilcasinodemo.mvc.conexion.RegisterRequest
-import com.example.devilcasinodemo.mvc.conexion.RegisterResponse
-import com.example.devilcasinodemo.mvc.conexion.StartGameRequest
+import com.example.devilcasinodemo.mvc.dto.BlackjackState
+import com.example.devilcasinodemo.mvc.dto.LoginRequest
+import com.example.devilcasinodemo.mvc.dto.LoginResponse
+import com.example.devilcasinodemo.mvc.dto.RegisterRequest
+import com.example.devilcasinodemo.mvc.dto.RegisterResponse
+import com.example.devilcasinodemo.mvc.dto.StartGameRequest
+import com.example.devilcasinodemo.mvc.dto.WalletResponse
+import com.example.devilcasinodemo.mvc.dto.WinLossResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
@@ -33,5 +36,30 @@ interface ApiService {
 
     @GET("/blackjack/state")
     suspend fun getState(@Query("userId") userId: Long): BlackjackState
+
+    // Wallet endpoints
+    @GET("api/wallet/{userId}")
+    suspend fun getWallet(@Path("userId") userId: Long): Response<WalletResponse>
+
+    @POST("api/wallet/{userId}/free")
+    suspend fun claimFree(@Path("userId") userId: Long): Response<WalletResponse>
+
+    @GET("api/wallet/{userId}/cooldown")
+    suspend fun getFreeCooldown(@Path("userId") userId: Long): Long
+
+    @POST("api/wallet/{userId}/purchase")
+    suspend fun purchaseCoins(
+        @Path("userId") userId: Long,
+        @Query("amount") amount: Double
+    ): Response<WalletResponse>
+
+    // Stats
+
+    @GET("api/stats/blackjack/{userId}")
+    suspend fun getBlackjackStats(
+        @Path("userId") userId: Long
+    ): WinLossResponse
+
+
 }
 

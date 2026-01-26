@@ -1,7 +1,11 @@
 package com.example.devilcasinodemo.navigator
 
 import Wallet
+import WalletViewModel
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -16,6 +20,7 @@ import com.example.devilcasinodemo.paginas.lobby.Lobby
 import com.example.devilcasinodemo.paginas.login.Login
 import com.example.devilcasinodemo.paginas.lobby.User
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AppNavHost(navController: NavHostController, startDestination: String, modifier: Modifier) {
 
@@ -58,12 +63,42 @@ fun AppNavHost(navController: NavHostController, startDestination: String, modif
             }
         }
 
+        composable("wallet") {
+            val walletViewModel: WalletViewModel = viewModel()
+            val userId = loginViewModel.userId
+
+            if (userId != null) {
+                Wallet(
+                    navController = navController,
+                    viewModel = walletViewModel,
+                    userId = userId
+                )
+            } else {
+                // User not logged in → go back to login
+                navController.navigate("login") {
+                    popUpTo("wallet") { inclusive = true }
+                }
+            }
+        }
+
         composable("liars_dice") { DevilDicesScreen(navController) }
-        composable("wallet") { Wallet(navController) }
+
         composable("create_user") { CreateAccountScreen(navController) }
-        composable("user") { User(navController) }
+        composable("user") {
+            val userId = loginViewModel.userId
+
+            if (userId != null) {
+                User(
+                    navController = navController,
+                    userId = userId
+                )
+            } else {
+                LaunchedEffect(Unit) {
+                    navController.navigate("login") {
+                        popUpTo("user") { inclusive = true }
+                    }
+                }
+            }
+        }
     }
 }
-
-
-
