@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.5.0 - 2026-02-09
+
+### Added
+- Sección de **Settings** para personalizar la experiencia del usuario:
+  - Cambio de **idioma**.
+  - Selección de **música de fondo**.
+- Música de fondo disponible en la aplicación.
+- **Oferta gratis** en Wallet: 100 Devil Coins disponibles cada 24 horas.
+
+### Improved
+- Integración de ajustes de usuario con la interfaz.
+- Mejor experiencia de usuario al interactuar con Wallet y música.
+
+### Notes
+- La música de fondo ahora se puede activar/desactivar y seleccionar desde Settings.
+- La oferta de 100 Devil Coins tiene un temporizador de 24 horas para ser reclamada.
+-Devil Dice sigue sin funcionalidad
 ## v0.4.0 - 2026-01-26
 
 ### Added
