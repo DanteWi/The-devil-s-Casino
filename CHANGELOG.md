@@ -1,5 +1,24 @@
 # Changelog
 
+## v0.4.0 - 2026-01-26
+
+### Added
+
+* Comunicación completa entre Perfil y Wallet con el servidor.
+* Actualización automática de datos del usuario y balance de Devil Coins (DC) en la interfaz.
+* Sincronización de cambios en tiempo real entre frontend y backend.
+
+### Improved
+
+* Estabilidad en la gestión de sesiones y datos del usuario.
+* Mejor manejo de errores al actualizar perfil y wallet.
+
+### Notes
+
+* Login y creación de usuario ahora funcionan correctamente con la actualización de perfil y wallet.
+* Base para futuras mejoras en otros juegos y funcionalidades de usuario.
+
+
 ## v0.3.0 - 2026-01-12
 
 ### Added
