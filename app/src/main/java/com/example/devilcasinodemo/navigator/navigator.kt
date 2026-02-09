@@ -17,6 +17,7 @@ import com.example.devilcasinodemo.paginas.gamesPages.BlackjackScreen
 import com.example.devilcasinodemo.paginas.gamesPages.DevilDicesScreen
 import com.example.devilcasinodemo.paginas.login.CreateAccountScreen
 import com.example.devilcasinodemo.paginas.lobby.Lobby
+import com.example.devilcasinodemo.paginas.lobby.SettingsScreen
 import com.example.devilcasinodemo.paginas.login.Login
 import com.example.devilcasinodemo.paginas.lobby.User
 
@@ -44,6 +45,11 @@ fun AppNavHost(navController: NavHostController, startDestination: String, modif
         composable("lobby") {
             Lobby(navController, loginViewModel)
         }
+
+        composable("settings") {
+            SettingsScreen()
+        }
+
 
         composable("blackjack") {
 

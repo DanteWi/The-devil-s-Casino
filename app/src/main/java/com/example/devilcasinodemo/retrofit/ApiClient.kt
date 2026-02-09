@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
 
-    //private const val BASE_URL = "http://10.250.217.254:8080/"    //prod
+    //private const val BASE_URL = "http://10.250.217.154:8080/"    //prod
     private const val BASE_URL = "http://10.0.2.2:8080/"  // para emulador ,a cambiar a cuando envias a produc
 
     val api: ApiService = Retrofit.Builder()

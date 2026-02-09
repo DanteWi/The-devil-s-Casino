@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.rememberNavController
+import com.example.devilcasinodemo.music.MusicManager
 import com.example.devilcasinodemo.navigator.NavigatorMenu
 import com.example.devilcasinodemo.ui.theme.DevilCasinoDemoTheme
 
@@ -21,5 +22,23 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+    override fun onStart() {
+        super.onStart()
+        // Start music when the app comes to foreground
+        MusicManager.start(this, R.raw.casino_music)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        // Optional: pause music when app goes to background
+        MusicManager.pause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Optional: release resources
+        MusicManager.stop()
+    }
+
 }
 

@@ -5,8 +5,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
@@ -16,11 +18,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.devilcasinodemo.R
 import com.example.devilcasinodemo.mvc.UserStatsViewModel
 import com.example.devilcasinodemo.mvc.dto.UserStatsViewModelFactory
 import com.example.devilcasinodemo.retrofit.ApiClient
@@ -74,63 +78,57 @@ fun User(navController: NavHostController, userId: Long) {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
-            .padding(top = 40.dp),
+            .verticalScroll(rememberScrollState()) // ✅ SCROLL
+            .padding(top = 40.dp, bottom = 40.dp),
+
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        // Avatar + Settings
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 40.dp),
-            horizontalArrangement = Arrangement.End
-        ) {
-            Box(
-                modifier = Modifier
-                    .size(160.dp)
-                    .background(Color(0xFFB71C1C), RoundedCornerShape(24.dp)),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Person,
-                    contentDescription = null,
-                    tint = Color.Black,
-                    modifier = Modifier.size(90.dp)
-                )
-            }
+        // --------------------------------------------------
+        // AVATAR
+        // --------------------------------------------------
 
-            Box(
-                modifier = Modifier
-                    .size(100.dp)
-                    .background(Color.Transparent, RoundedCornerShape(24.dp)),
-                contentAlignment = Alignment.Center
-            ) {
-                IconButton(onClick = { }) {
-                    Icon(
-                        imageVector = Icons.Default.Settings,
-                        contentDescription = null,
-                        tint = Color.Black,
-                        modifier = Modifier.size(90.dp)
-                    )
-                }
-            }
+        Box(
+            modifier = Modifier
+                .size(160.dp)
+                .background(Color(0xFFB71C1C), RoundedCornerShape(24.dp)),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = Icons.Default.Person,
+                contentDescription = null,
+                tint = Color.Black,
+                modifier = Modifier.size(90.dp)
+            )
         }
 
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(30.dp))
+
+        // --------------------------------------------------
+        // USER INFO
+        // --------------------------------------------------
 
         Text("(USER NAME)", color = Color.Yellow, fontSize = 26.sp)
+
         Text("XXXX   DC", color = Color(0xFFFF1744), fontSize = 26.sp)
 
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(30.dp))
 
+        // --------------------------------------------------
         // DONUT CHART
-        DonutChart(wins = winPercent, losses = losePercent, size = 250.dp)
+        // --------------------------------------------------
 
-        Spacer(modifier = Modifier.height(40.dp))
+        DonutChart(
+            wins = winPercent,
+            losses = losePercent,
+            size = 250.dp
+        )
 
-        // ------------------------------------------------------
-        // CARD BOX (CLICK → OPENS POPUP)
-        // ------------------------------------------------------
+        Spacer(modifier = Modifier.height(30.dp))
+
+        // --------------------------------------------------
+        // CARD PICKER
+        // --------------------------------------------------
 
         Box(
             modifier = Modifier
@@ -138,8 +136,10 @@ fun User(navController: NavHostController, userId: Long) {
                 .height(90.dp)
                 .border(3.dp, Color.Red, RoundedCornerShape(20.dp))
                 .padding(16.dp),
+
             contentAlignment = Alignment.Center
         ) {
+
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
@@ -152,11 +152,36 @@ fun User(navController: NavHostController, userId: Long) {
                 Spacer(Modifier.width(10.dp))
 
                 Text(
-                    "Card in usage:   ${selectedCard.name}",
+                    "Card in usage: ${selectedCard.name}",
                     color = Color.White
                 )
             }
         }
+
+        Spacer(modifier = Modifier.height(25.dp))
+
+        // --------------------------------------------------
+        // SETTINGS BUTTON (UNDER CARD PICKER)
+        // --------------------------------------------------
+
+        IconButton(
+            onClick = {
+                navController.navigate("settings")
+            },
+            modifier = Modifier
+                .size(70.dp)
+                .background(Color(0xFFD90202), CircleShape)
+        ) {
+            Icon(
+                imageVector = Icons.Default.Settings,
+                contentDescription = "Settings",
+                tint = Color.Black,
+
+                modifier = Modifier.size(36.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(40.dp))
     }
 
     // ------------------------------------------------------
@@ -259,7 +284,7 @@ fun CardPickerDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Select Card") },
+        title = { Text(stringResource(R.string.select_card)) },
         text = {
             Column {
 
@@ -283,7 +308,7 @@ fun CardPickerDialog(
                 Spacer(Modifier.height(12.dp))
 
                 Button(onClick = onAdd) {
-                    Text("Add New Card")
+                    Text(stringResource(R.string.add_new_card))
                 }
             }
         },

@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -83,7 +84,7 @@ fun Login(navController: NavHostController, viewModel: LoginViewModel = LoginVie
             )
 
             Text(
-                text = "Welcome back Sinner",
+                text = stringResource(R.string.welcome_back_sinner),
                 color = Color.Red
             )
 
@@ -104,7 +105,7 @@ fun Login(navController: NavHostController, viewModel: LoginViewModel = LoginVie
                         email = it
                         emailError = !emailRegex.matches(email)
                     },
-                    label = { Text("Email", color = neonOrange) },
+                    label = { Text(stringResource(R.string.email2), color = neonOrange) },
                     textStyle = LocalTextStyle.current.copy(color = neonOrange),
                     isError = emailError,
                     colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -118,9 +119,11 @@ fun Login(navController: NavHostController, viewModel: LoginViewModel = LoginVie
 
                 if (emailError) {
                     Text(
-                        text = "Email inválido",
+                        text = stringResource(R.string.email_invalid),
                         color = Color.Red,
-                        modifier = Modifier.align(Alignment.Start).padding(start = 8.dp, top = 4.dp)
+                        modifier = Modifier
+                            .align(Alignment.Start)
+                            .padding(start = 8.dp, top = 4.dp)
                     )
                 }
 
@@ -130,7 +133,7 @@ fun Login(navController: NavHostController, viewModel: LoginViewModel = LoginVie
                 OutlinedTextField(
                     value = password,
                     onValueChange = { password = it },
-                    label = { Text("Password", color = neonOrange) },
+                    label = { Text(stringResource(R.string.password2), color = neonOrange) },
                     textStyle = LocalTextStyle.current.copy(color = neonOrange),
                     visualTransformation = PasswordVisualTransformation(),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -147,7 +150,7 @@ fun Login(navController: NavHostController, viewModel: LoginViewModel = LoginVie
                 if (message.isNotEmpty()) {
                     Text(
                         text = message,
-                        color = if (message == "Login correcto") Color.Green else Color.Red,
+                        color = if (message == "Login correct") Color.Green else Color.Red,
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
                 }
@@ -182,7 +185,7 @@ fun Login(navController: NavHostController, viewModel: LoginViewModel = LoginVie
                         .fillMaxWidth()
                         .height(50.dp)
                 ) {
-                    Text("Login", color = Color.Black)
+                    Text(stringResource(R.string.login), color = Color.Black)
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -190,9 +193,7 @@ fun Login(navController: NavHostController, viewModel: LoginViewModel = LoginVie
                 // Optional Google Login Button
                 Button(
                     onClick = {
-                        navController.navigate("test_login") {
-                            popUpTo("login") { inclusive = true }
-                        }
+
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = neonOrange),
                     shape = RoundedCornerShape(12.dp),
@@ -203,18 +204,20 @@ fun Login(navController: NavHostController, viewModel: LoginViewModel = LoginVie
                     Image(
                         painter = painterResource(id = R.drawable.google__g__logo_svg),
                         contentDescription = "Google Logo",
-                        modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight(),
                         contentScale = ContentScale.Fit
                     )
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                Text(text = "New here? Come with me ")
+                Text(text = stringResource(R.string.new_here_come_with_me))
                 Spacer(modifier = Modifier.height(16.dp))
 
                 ClickableText(
-                    text = AnnotatedString(text = "Welcome sinner"),
+                    text = AnnotatedString(text = stringResource(R.string.welcome_sinner)),
                     style = LocalTextStyle.current.copy(
                         color = Color.Red,
                         textDecoration = TextDecoration.Underline,

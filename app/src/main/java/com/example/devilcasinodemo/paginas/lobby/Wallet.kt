@@ -66,13 +66,7 @@ fun Wallet(navController: NavHostController, viewModel: WalletViewModel, userId:
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = userId.toString(),
-            fontSize = 28.sp,
-            color = Color(0xFFFFD700),
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(top = 24.dp)
-        )
+
 
         Text(
             text = "${wallet?.walletAmount ?: 0.0} DC",

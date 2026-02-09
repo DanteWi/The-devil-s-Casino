@@ -111,7 +111,7 @@ fun CreateAccountScreen(
                         user = it
                         userError = it.isBlank()
                     },
-                    label = { Text("User Name", color = neonOrange) },
+                    label = { Text(stringResource(R.string.user_name), color = neonOrange) },
                     isError = userError,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -124,7 +124,7 @@ fun CreateAccountScreen(
                         email = it
                         emailError = !emailRegex.matches(it)
                     },
-                    label = { Text("Email", color = neonOrange) },
+                    label = { Text(stringResource(R.string.email), color = neonOrange) },
                     isError = emailError,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -137,7 +137,7 @@ fun CreateAccountScreen(
                         password = it
                         passwordError = it.length < 6
                     },
-                    label = { Text("Password", color = neonOrange) },
+                    label = { Text(stringResource(R.string.password), color = neonOrange) },
                     visualTransformation = PasswordVisualTransformation(),
                     isError = passwordError,
                     modifier = Modifier.fillMaxWidth()
@@ -151,7 +151,7 @@ fun CreateAccountScreen(
                         rpassword = it
                         rpasswordError = it != password
                     },
-                    label = { Text("Repeat Password", color = neonOrange) },
+                    label = { Text(stringResource(R.string.repeat_password), color = neonOrange) },
                     visualTransformation = PasswordVisualTransformation(),
                     isError = rpasswordError,
                     modifier = Modifier.fillMaxWidth()
@@ -170,7 +170,7 @@ fun CreateAccountScreen(
 
                 Button(
                     onClick = {
-                        message = "Creating account..."
+                        message = R.string.creating_account.toString()
                         viewModel.register(user, email, password) { success, result ->
                             isSuccess = success
                             message = result ?: ""
@@ -188,7 +188,7 @@ fun CreateAccountScreen(
                         .fillMaxWidth()
                         .height(50.dp)
                 ) {
-                    Text("Create Account", color = Color.Black)
+                    Text(stringResource(R.string.create_account), color = Color.Black)
                 }
 
                 Spacer(modifier = Modifier.height(12.dp))
@@ -199,7 +199,7 @@ fun CreateAccountScreen(
                     ClickableText(
                         text = buildAnnotatedString {
                             withStyle(SpanStyle(color = Color.White)) {
-                                append("Terms and Conditions")
+                                append(stringResource(R.string.terms_and_conditions2))
                             }
                         },
                         onClick = { showDialog = true }
@@ -225,7 +225,7 @@ fun CreateAccountScreen(
                                 ) {
 
                                     Text(
-                                        text = "Terms and Conditions",
+                                        text = stringResource(R.string.terms_and_conditions),
                                         color = neonOrange,
                                         fontWeight = FontWeight.Bold,
                                         fontSize = 20.sp
