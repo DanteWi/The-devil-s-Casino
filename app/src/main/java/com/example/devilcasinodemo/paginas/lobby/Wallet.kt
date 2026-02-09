@@ -33,6 +33,8 @@ import androidx.navigation.NavHostController
 import kotlinx.coroutines.delay
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.TextButton
+import androidx.compose.ui.res.stringResource
+import com.example.devilcasinodemo.R
 
 import java.util.concurrent.TimeUnit
 
@@ -85,7 +87,7 @@ fun Wallet(navController: NavHostController, viewModel: WalletViewModel, userId:
                 // Free 100 — timer connected
                 ShopCard(
                     amount = "100",
-                    price = "Free",
+                    price = stringResource(R.string.free),
                     cooldownState = free100Cooldown,
                     borderColor = Color(0xFFCC0000)
                 ) {
@@ -200,19 +202,19 @@ fun ShopCard(
     if (showConfirm) {
         AlertDialog(
             onDismissRequest = { showConfirm = false },
-            title = { Text("Confirm Purchase") },
-            text = { Text("Buy $amount DC for $price ?") },
+            title = { Text(stringResource(R.string.confirm_purchase)) },
+            text = { Text(stringResource(R.string.buy_dc_for, amount, price)) },
             confirmButton = {
                 TextButton(onClick = {
                     showConfirm = false
                     onClick()
                 }) {
-                    Text("Confirm")
+                    Text(stringResource(R.string.confirm))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showConfirm = false }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.cancel))
                 }
             },
             containerColor = Color.Black,

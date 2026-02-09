@@ -152,7 +152,7 @@ fun User(navController: NavHostController, userId: Long) {
                 Spacer(Modifier.width(10.dp))
 
                 Text(
-                    "Card in usage: ${selectedCard.name}",
+                    stringResource(R.string.card_in_usage, selectedCard.name),
                     color = Color.White
                 )
             }

@@ -1,10 +1,12 @@
 package com.example.devilcasinodemo
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.rememberNavController
+import com.example.devilcasinodemo.lenguas.LocaleHelper
 import com.example.devilcasinodemo.music.MusicManager
 import com.example.devilcasinodemo.navigator.NavigatorMenu
 import com.example.devilcasinodemo.ui.theme.DevilCasinoDemoTheme
@@ -39,6 +41,17 @@ class MainActivity : ComponentActivity() {
         // Optional: release resources
         MusicManager.stop()
     }
+
+    override fun attachBaseContext(newBase: Context) {
+
+        val prefs = newBase.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val lang = prefs.getString("language", "en") ?: "en"
+
+        val context = LocaleHelper.setLocale(newBase, lang)
+
+        super.attachBaseContext(context)
+    }
+
 
 }
 

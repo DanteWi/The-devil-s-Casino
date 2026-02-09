@@ -1,20 +1,35 @@
 package com.example.devilcasinodemo.paginas.lobby
 
 
+import android.app.Activity
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -22,6 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.devilcasinodemo.R
+import com.example.devilcasinodemo.lenguas.LocaleHelper
 import com.example.devilcasinodemo.music.MusicManager
 
 @Composable
@@ -30,7 +46,17 @@ fun SettingsScreen() {
     // States
     var musicVolume by remember { mutableStateOf(0.5f) }
     var isMuted by remember { mutableStateOf(false) }
-    var selectedLanguage by remember { mutableStateOf("EN") }
+    val context = LocalContext.current
+    val activity = context as Activity
+
+    val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+
+    var selectedLanguage by remember {
+        mutableStateOf(
+            prefs.getString("language", "en") ?: "en"
+        )
+    }
+
 
     Column(
         modifier = Modifier
@@ -45,7 +71,7 @@ fun SettingsScreen() {
         Spacer(Modifier.height(20.dp))
 
         Text(
-            text = "Settings",
+            text = stringResource(R.string.settings),
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             color = Color(0xFFFF1414),
@@ -63,17 +89,7 @@ fun SettingsScreen() {
         )
 
         Spacer(Modifier.height(8.dp))
-        Slider(
-            value = musicVolume,
-            onValueChange = {
-                musicVolume = it
-                isMuted = false
-                MusicManager.setVolume(it)
-                MusicManager.mute(false)
-            },
-            valueRange = 0f..1f,
-            modifier = Modifier.fillMaxWidth(0.9f)
-        )
+
 
         Button(
             onClick = {
@@ -119,24 +135,31 @@ fun SettingsScreen() {
 
             LanguageButton(
                 flag = R.drawable.flag_uk,
-                isSelected = selectedLanguage == "EN"
+                isSelected = selectedLanguage == "en"
             ) {
-                selectedLanguage = "EN"
+                changeLanguage("en", context, activity) {
+                    selectedLanguage = "en"
+                }
             }
 
             LanguageButton(
                 flag = R.drawable.flag_es,
-                isSelected = selectedLanguage == "ES"
+                isSelected = selectedLanguage == "es"
             ) {
-                selectedLanguage = "ES"
+                changeLanguage("es", context, activity) {
+                    selectedLanguage = "es"
+                }
             }
 
             LanguageButton(
                 flag = R.drawable.flag_ro,
-                isSelected = selectedLanguage == "RO"
+                isSelected = selectedLanguage == "ro"
             ) {
-                selectedLanguage = "RO"
+                changeLanguage("ro", context, activity) {
+                    selectedLanguage = "ro"
+                }
             }
+
         }
 
         Spacer(Modifier.height(30.dp))
@@ -148,11 +171,32 @@ fun SettingsScreen() {
         )
     }
 }
+fun changeLanguage(
+    lang: String,
+    context: Context,
+    activity: Activity,
+    onDone: () -> Unit
+) {
+    // Save user preference
+    val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+    prefs.edit().putString("language", lang).apply()
+
+    // Apply locale using your helper
+    LocaleHelper.setLocale(context, lang)
+
+    // Refresh activity to reload strings
+    activity.recreate()
+
+    onDone()
+}
+
+
+
 @Composable
 fun LanguageButton(
     flag: Int,
     isSelected: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit   // <-- remove @Composable here
 ) {
     Box(
         modifier = Modifier
@@ -165,7 +209,7 @@ fun LanguageButton(
                 if (isSelected) Color(0xFFFFE082) else Color.DarkGray,
                 RoundedCornerShape(12.dp)
             )
-            .clickable { onClick() },
+            .clickable { onClick() },  // now works
 
         contentAlignment = Alignment.Center
     ) {

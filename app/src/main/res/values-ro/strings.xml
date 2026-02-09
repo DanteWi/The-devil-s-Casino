@@ -1,4 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DevilCasinoDemo</string>
+    <string name="app_name" translatable="false">DevilCasinoDemo</string>
+
+    <string name="terms_and_Conditions">
+        "\n                        Bun venit la Devil Casino Demo! Prin crearea unui cont, ești de acord cu Termenii și Condițiile noastre. \n
+                        Acest lucru include respectarea tuturor legilor aplicabile, neimplicarea în activități frauduloase și înțelegerea faptului că această aplicație este doar în scop demonstrativ.\n\n
+                        Te rugăm să citești cu atenție înainte de a continua.\n
+                    "
+    </string>
+
+    <string name="welcome_to_devil_casino_demo_by_creating_an_account_you_agree_to_our_terms_and_conditions_this_includes_following_all_applicable_laws_not_engaging_in_fraudulent_activities_and_understanding_that_this_app_is_for_demonstration_purposes_only_please_read_carefully_before_proceeding_lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_vivamus_lacinia_odio_vitae_vestibulum_vestibulum_cras_venenatis_euismod_malesuada_donec_a_quam_sit_amet_eros_feugiat_tincidunt_integer_nec_dolor_nec_urna_facilisis_aliquam_curabitur_efficitur_purus_a_sollicitudin_varius_libero_nisi_tincidunt_justo_a_feugiat_nulla_magna_in_justo_sed_et_risus_ut_sapien_ullamcorper_sagittis_suspendisse_potenti_pellentesque_habitant_morbi_tristique_senectus_et_netus_et_malesuada_fames_ac_turpis_egestas">
+        "\n                        Bun venit la Devil Casino Demo! Prin crearea unui cont, ești de acord cu Termenii și Condițiile noastre. \n
+
+                        Acest lucru include respectarea tuturor legilor aplicabile, neimplicarea în activități frauduloase și înțelegerea faptului că această aplicație este doar în scop demonstrativ.\n\n
+                        Te rugăm să citești cu atenție înainte de a continua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Donec a quam sit amet eros feugiat tincidunt. Integer nec dolor nec urna facilisis aliquam. Curabitur efficitur, purus a sollicitudin varius, libero nisi tincidunt justo, a feugiat nulla magna in justo. Sed et risus ut sapien ullamcorper sagittis. Suspendisse potenti. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.\n
+                    "
+    </string>
+
+    <string name="terms">
+        " Termeni și Condiții – Devils Casino    Data intrării în vigoare: [1/10/2025]  Versiunea: 2.0
+
+        Bun venit la Devils Casino („noi”, „nostru”). Te rugăm să citești cu atenție acești Termeni și Condiții înainte de a utiliza aplicația mobilă Devils Casino.
+
+        Prin utilizarea aplicației, accepți să respecți acești termeni. Dacă nu ești de acord, nu utiliza aplicația.
+
+        1. Introducere
+
+        1.1 Devils Casino oferă o platformă de divertisment virtual cu jocuri de tip cazino, în scop recreativ.
+        1.2 Aplicația utilizează o monedă virtuală numită Devil Coins („DC”).
+        1.3 DC nu reprezintă bani reali și nu pot fi schimbați în afara aplicației.
+        1.4 Utilizarea aplicației nu constituie jocuri de noroc sau investiții reale.
+
+        2. Eligibilitate
+
+        2.1 Trebuie să ai cel puțin 18 ani sau vârsta legală.
+        2.2 Garantezi că îndeplinești cerințele.
+        2.3 Putem suspenda conturile neeligibile.
+
+        3. Înregistrarea Contului
+
+        3.1 Trebuie să furnizezi informații corecte.
+        3.2 Conturile pot fi suspendate pentru fraudă sau inactivitate.
+        3.3 Ești responsabil pentru contul tău.
+
+        4. Devil Coins (DC)
+
+        4.1 Obținere: cumpărături, promoții sau reclame.
+        4.2 Utilizare: doar în aplicație.
+        4.3 Nu reprezintă bani reali.
+        4.4 Pot expira.
+
+        5. Achiziții în Aplicație
+
+        5.1 Nerambursabile, conform legii.
+        5.2 Promoții supuse condițiilor.
+        5.3 Autorizezi plățile.
+
+        6. Jocuri și Premii
+
+        6.1 Jocuri doar pentru divertisment.
+        6.2 Premii digitale.
+        6.3 Modificări fără notificare.
+        6.4 Abuzul va fi sancționat.
+
+        7. Conduita Utilizatorului
+
+        7.1 Nu desfășura activități ilegale.
+        7.2 Încălcările duc la suspendare.
+
+        8. Proprietate Intelectuală
+
+        8.1 Tot conținutul aparține Devils Casino.
+        8.2 Licență limitată.
+        8.3 Interzisă copierea sau modificarea.
+
+        9. Confidențialitate și Date
+
+        9.1 Respectăm GDPR.
+        9.2 Accepți prelucrarea datelor.
+        9.3 Drepturi de acces și ștergere.
+
+        10. Limitarea Răspunderii
+
+        10.1 Aplicația este furnizată „ca atare”.
+        10.2 Nu răspundem pentru pierderi digitale.
+
+        11. Încetarea
+
+        11.1 Putem închide conturi.
+        11.2 DC se pierd fără rambursare.
+
+        12. Modificări
+
+        12.1 Putem actualiza termenii.
+        12.2 Utilizarea implică acceptarea.
+
+        13. Soluționarea Litigiilor
+
+        13.1 Se aplică legislația UE.
+        13.2 Negociere prealabilă.
+        13.3 Instanțe competente.
+
+        14. Diverse
+
+        14.1 Forță majoră.
+        14.2 Separabilitate.
+        14.3 Acord complet.
+
+        15. Contact
+
+        Email: support@devilscasino.com "
+    </string>
+
+    <string name="effective_date_1_10_2025" translatable="false">
+        Data intrării în vigoare: [1/10/2025]\n
+    </string>
+
+    <string name="terms_and_conditions">Termeni și Condiții</string>
+    <string name="terms_and_conditions2">Termeni și Condiții</string>
+
+    <string name="create_account">Creează Cont</string>
+    <string name="creating_account">Se creează contul...</string>
+    <string name="repeat_password">Repetă Parola</string>
+    <string name="password">Parolă</string>
+    <string name="email">Email</string>
+    <string name="user_name">Nume Utilizator</string>
+
+    <string name="welcome_sinner">Bun venit, păcătosule</string>
+    <string name="new_here_come_with_me">"Nou aici? Vino cu mine "</string>
+
+    <string name="login">Autentificare</string>
+    <string name="password2">Parolă</string>
+    <string name="email_invalid">Email invalid</string>
+    <string name="email2">Email</string>
+
+    <string name="welcome_back_sinner">Bun venit înapoi, păcătosule</string>
+
+    <string name="music_muted">Muzică Oprită</string>
+    <string name="mute_music">Oprește Muzica</string>
+    <string name="music_volume">Volum Muzică</string>
+    <string name="language_flag">Steag Limbă</string>
+
+    <string name="add_new_card">Adaugă Card Nou</string>
+    <string name="select_card">Selectează Cardul</string>
+
+    <string name="start_game">PORNEȘTE JOCUL</string>
+    <string name="bet_amount">Sumă Pariază</string>
+    <string name="enter_your_bet_amount">Introdu suma pariului</string>
+    <string name="place_your_bet">PLASEAZĂ PARIUL</string>
+
+    <string name="card_in_usage">Card utilizat: %1$s</string>
+
+    <string name="welcome_to_the_devil_s_casino">Bun venit la Cazinoul Diavolului</string>
+
+    <string name="the_devil_is_preparing_more_tricks_but_for_now_you_only_get_this_sinner">
+        Diavolul pregătește mai multe trucuri, dar deocamdată primești doar acest păcătos
+    </string>
+
+    <string name="settings">Setări</string>
+    <string name="free">Gratuit</string>
+
+    <string name="confirm_purchase">Confirmă Achiziția</string>
+    <string name="buy_dc_for">Cumperi %1$s DC pentru %2$s?</string>
+    <string name="confirm">Confirmă</string>
+    <string name="cancel">Anulează</string>
+
 </resources>

@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
@@ -85,7 +86,7 @@ fun BlackjackScreen(
 
             title = {
                 Text(
-                    text = "PLACE YOUR BET",
+                    text = stringResource(R.string.place_your_bet),
                     color = Color.Red,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.ExtraBold,
@@ -100,7 +101,7 @@ fun BlackjackScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "Enter your bet amount",
+                        text = stringResource(R.string.enter_your_bet_amount),
                         color = Color.White,
                         fontSize = 16.sp,
                         modifier = Modifier.padding(bottom = 12.dp)
@@ -117,7 +118,7 @@ fun BlackjackScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 8.dp),
-                        label = { Text("Bet Amount", fontSize = 14.sp) }
+                        label = { Text(stringResource(R.string.bet_amount), fontSize = 14.sp) }
                     )
                 }
             },
@@ -131,7 +132,7 @@ fun BlackjackScreen(
                     shape = RoundedCornerShape(14.dp)
                 ) {
                     Text(
-                        "START GAME",
+                        stringResource(R.string.start_game),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     )

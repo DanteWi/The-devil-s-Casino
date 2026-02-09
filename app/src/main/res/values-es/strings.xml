@@ -1,7 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DevilCasinoDemo</string>
-    <string name="terms_and_Conditions">si</string>
-    <string name="welcome_to_devil_casino_demo_by_creating_an_account_you_agree_to_our_terms_and_conditions_this_includes_following_all_applicable_laws_not_engaging_in_fraudulent_activities_and_understanding_that_this_app_is_for_demonstration_purposes_only_please_read_carefully_before_proceeding_lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_vivamus_lacinia_odio_vitae_vestibulum_vestibulum_cras_venenatis_euismod_malesuada_donec_a_quam_sit_amet_eros_feugiat_tincidunt_integer_nec_dolor_nec_urna_facilisis_aliquam_curabitur_efficitur_purus_a_sollicitudin_varius_libero_nisi_tincidunt_justo_a_feugiat_nulla_magna_in_justo_sed_et_risus_ut_sapien_ullamcorper_sagittis_suspendisse_potenti_pellentesque_habitant_morbi_tristique_senectus_et_netus_et_malesuada_fames_ac_turpis_egestas">hola</string>
-    <string name="terms">terminos y condiciones</string>
+    <string name="app_name" translatable="false">DevilCasinoDemo</string>
+
+    <string name="terms_and_Conditions">
+        "\n                        ¡Bienvenido a Devil Casino Demo! Al crear una cuenta, aceptas nuestros Términos y Condiciones. \n
+                        Esto incluye cumplir con todas las leyes aplicables, no participar en actividades fraudulentas y entender que esta aplicación es solo para fines de demostración.\n\n
+                        Por favor, lee cuidadosamente antes de continuar.\n
+                    "
+    </string>
+
+    <string name="welcome_to_devil_casino_demo_by_creating_an_account_you_agree_to_our_terms_and_conditions_this_includes_following_all_applicable_laws_not_engaging_in_fraudulent_activities_and_understanding_that_this_app_is_for_demonstration_purposes_only_please_read_carefully_before_proceeding_lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_vivamus_lacinia_odio_vitae_vestibulum_vestibulum_cras_venenatis_euismod_malesuada_donec_a_quam_sit_amet_eros_feugiat_tincidunt_integer_nec_dolor_nec_urna_facilisis_aliquam_curabitur_efficitur_purus_a_sollicitudin_varius_libero_nisi_tincidunt_justo_a_feugiat_nulla_magna_in_justo_sed_et_risus_ut_sapien_ullamcorper_sagittis_suspendisse_potenti_pellentesque_habitant_morbi_tristique_senectus_et_netus_et_malesuada_fames_ac_turpis_egestas">
+        "\n                        ¡Bienvenido a Devil Casino Demo! Al crear una cuenta, aceptas nuestros Términos y Condiciones. \n
+
+                        Esto incluye cumplir con todas las leyes aplicables, no participar en actividades fraudulentas y entender que esta aplicación es solo para fines de demostración.\n\n
+                        Por favor, lee cuidadosamente antes de continuar. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Donec a quam sit amet eros feugiat tincidunt. Integer nec dolor nec urna facilisis aliquam. Curabitur efficitur, purus a sollicitudin varius, libero nisi tincidunt justo, a feugiat nulla magna in justo. Sed et risus ut sapien ullamcorper sagittis. Suspendisse potenti. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.\n
+                    "
+    </string>
+
+    <string name="terms">
+        " Términos y Condiciones – Devils Casino    Fecha de vigencia: [1/10/2025]  Versión: 2.0
+
+        Bienvenido a Devils Casino (“nosotros”, “nuestro”). Por favor, lee cuidadosamente estos Términos y Condiciones antes de usar la aplicación móvil Devils Casino.
+
+        Al usar la aplicación, aceptas estar sujeto a estos términos. Si no estás de acuerdo, no debes usar la aplicación.
+
+        1. Introducción
+
+        1.1 Devils Casino ofrece una plataforma de entretenimiento virtual con juegos tipo casino para fines recreativos.
+        1.2 La aplicación utiliza una moneda virtual llamada Devil Coins (“DC”).
+        1.3 Los DC no son dinero real y no pueden convertirse en dinero fuera de la aplicación.
+        1.4 El uso de la aplicación no constituye inversión ni apuestas reales.
+
+        2. Elegibilidad
+
+        2.1 Debes tener al menos 18 años o la mayoría de edad legal.
+        2.2 Garantizas cumplir los requisitos.
+        2.3 Podemos suspender cuentas que no cumplan.
+
+        3. Registro de Cuenta
+
+        3.1 Debes proporcionar información correcta.
+        3.2 Las cuentas pueden suspenderse por fraude o inactividad.
+        3.3 Eres responsable de tu cuenta.
+
+        4. Devil Coins (DC)
+
+        4.1 Obtención: compras, promociones o anuncios.
+        4.2 Uso: solo dentro de la aplicación.
+        4.3 No representan dinero real.
+        4.4 Pueden expirar.
+
+        5. Compras dentro de la App
+
+        5.1 No reembolsables, salvo por ley.
+        5.2 Promociones sujetas a condiciones.
+        5.3 Autorizas los pagos.
+
+        6. Juegos y Premios
+
+        6.1 Juegos solo para entretenimiento.
+        6.2 Premios digitales.
+        6.3 Cambios sin previo aviso.
+        6.4 Abuso resultará en sanciones.
+
+        7. Conducta del Usuario
+
+        7.1 No realizar actividades ilegales.
+        7.2 Violaciones resultarán en suspensión.
+
+        8. Propiedad Intelectual
+
+        8.1 Todo el contenido es propiedad de Devils Casino.
+        8.2 Licencia limitada.
+        8.3 Prohibido copiar o modificar.
+
+        9. Privacidad y Datos
+
+        9.1 Cumplimos con GDPR.
+        9.2 Aceptas el procesamiento de datos.
+        9.3 Derechos de acceso y eliminación.
+
+        10. Limitación de Responsabilidad
+
+        10.1 La app se proporciona “tal cual”.
+        10.2 No somos responsables por pérdidas digitales.
+
+        11. Terminación
+
+        11.1 Podemos cerrar cuentas.
+        11.2 Se pierden DC sin reembolso.
+
+        12. Modificaciones
+
+        12.1 Podemos actualizar términos.
+        12.2 El uso implica aceptación.
+
+        13. Resolución de Disputas
+
+        13.1 Ley europea aplicable.
+        13.2 Negociación previa.
+        13.3 Tribunales competentes.
+
+        14. Misceláneo
+
+        14.1 Fuerza mayor.
+        14.2 Separabilidad.
+        14.3 Acuerdo completo.
+
+        15. Contacto
+
+        Email: support@devilscasino.com "
+    </string>
+
+    <string name="effective_date_1_10_2025" translatable="false">
+        Fecha de vigencia: [1/10/2025]\n
+    </string>
+
+    <string name="terms_and_conditions">Términos y Condiciones</string>
+    <string name="terms_and_conditions2">Términos y Condiciones</string>
+    <string name="create_account">Crear Cuenta</string>
+    <string name="creating_account">Creando cuenta...</string>
+    <string name="repeat_password">Repetir Contraseña</string>
+    <string name="password">Contraseña</string>
+    <string name="email">Correo Electrónico</string>
+    <string name="user_name">Nombre de Usuario</string>
+    <string name="welcome_sinner">Bienvenido pecador</string>
+    <string name="new_here_come_with_me">"¿Nuevo aquí? Ven conmigo "</string>
+    <string name="login">Iniciar Sesión</string>
+    <string name="password2">Contraseña</string>
+    <string name="email_invalid">Correo inválido</string>
+    <string name="email2">Correo Electrónico</string>
+    <string name="welcome_back_sinner">Bienvenido de nuevo, pecador</string>
+
+    <string name="music_muted">Música Silenciada</string>
+    <string name="mute_music">Silenciar Música</string>
+    <string name="music_volume">Volumen de Música</string>
+    <string name="language_flag">Bandera de Idioma</string>
+
+    <string name="add_new_card">Agregar Nueva Tarjeta</string>
+    <string name="select_card">Seleccionar Tarjeta</string>
+
+    <string name="start_game">INICIAR JUEGO</string>
+    <string name="bet_amount">Monto de Apuesta</string>
+    <string name="enter_your_bet_amount">Ingresa tu apuesta</string>
+    <string name="place_your_bet">REALIZAR APUESTA</string>
+
+    <string name="card_in_usage">Tarjeta en uso: %1$s</string>
+
+    <string name="welcome_to_the_devil_s_casino">Bienvenido al Casino del Diablo</string>
+    <string name="the_devil_is_preparing_more_tricks_but_for_now_you_only_get_this_sinner">
+        El diablo está preparando más trucos, pero por ahora solo obtienes este pecador
+    </string>
+
+    <string name="settings">Configuración</string>
+    <string name="free">Gratis</string>
+
+    <string name="confirm_purchase">Confirmar Compra</string>
+    <string name="buy_dc_for">¿Comprar %1$s DC por %2$s?</string>
+    <string name="confirm">Confirmar</string>
+    <string name="cancel">Cancelar</string>
+
 </resources>

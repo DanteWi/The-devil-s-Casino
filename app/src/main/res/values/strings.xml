@@ -25,5 +25,18 @@
     <string name="language_flag">Language Flag</string>
     <string name="add_new_card">Add New Card</string>
     <string name="select_card">Select Card</string>
+    <string name="start_game">START GAME</string>
+    <string name="bet_amount">Bet Amount</string>
+    <string name="enter_your_bet_amount">Enter your bet amount</string>
+    <string name="place_your_bet">PLACE YOUR BET</string>
+    <string name="card_in_usage">Card in usage: %1$s</string>
+    <string name="welcome_to_the_devil_s_casino">Welcome to the Devil\'s Casino</string>
+    <string name="the_devil_is_preparing_more_tricks_but_for_now_you_only_get_this_sinner">The devil is preparing more tricks, but for now you only get this sinner</string>
+    <string name="settings">Settings</string>
+    <string name="free">Free</string>
+    <string name="confirm_purchase">Confirm Purchase</string>
+    <string name="buy_dc_for">Buy %1$s DC for %2$s ?</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

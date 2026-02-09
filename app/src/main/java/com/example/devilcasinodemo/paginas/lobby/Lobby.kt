@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -50,7 +51,7 @@ fun Lobby(navController: NavHostController, loginViewModel: LoginViewModel) {
         // Welcome text
         Spacer(Modifier.height(20.dp))
         NeonText(
-            text = "Welcome to the Devil's Casino",
+            text = stringResource(R.string.welcome_to_the_devil_s_casino),
             color = Color(0xFFFFE082),
             fontSize = 28.sp
         )
@@ -84,7 +85,7 @@ fun Lobby(navController: NavHostController, loginViewModel: LoginViewModel) {
 
         // Footer text
         Text(
-            text = "The devil is preparing more tricks, but for now you only get this sinner",
+            text = stringResource(R.string.the_devil_is_preparing_more_tricks_but_for_now_you_only_get_this_sinner),
             color = Color.Red,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
