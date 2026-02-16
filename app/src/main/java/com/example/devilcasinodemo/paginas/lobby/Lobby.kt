@@ -5,8 +5,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,7 +21,6 @@ import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
@@ -26,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.devilcasinodemo.R
 import com.example.devilcasinodemo.mvc.LoginViewModel
+import com.example.devilcasinodemo.ui.theme.CasinoFont
 
 data class Game(
     val name: String,
@@ -39,26 +43,25 @@ fun Lobby(navController: NavHostController, loginViewModel: LoginViewModel) {
     val games = listOf(
         Game("Blackjack", R.drawable.blackjackimage, "blackjack"),
         Game("Liars Dice", R.drawable.dicegameimage, "liars_dice"),
+
     )
     val username = loginViewModel.username
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp, vertical = 16.dp),
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Welcome text
         Spacer(Modifier.height(20.dp))
         NeonText(
             text = stringResource(R.string.welcome_to_the_devil_s_casino),
-            color = Color(0xFFFFE082),
-            fontSize = 28.sp
+            color = Color(0xFFFF9800),
+            fontSize = 16.sp
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        // User ID
         NeonText(
             text = username ?: "Unknown user",
             color = Color(0xFFFFE082),
@@ -67,21 +70,21 @@ fun Lobby(navController: NavHostController, loginViewModel: LoginViewModel) {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Scrollable game list
-        Row(
+        // LazyVerticalGrid with 2 columns
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .horizontalScroll(scrollState),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+                .weight(1f) // take remaining vertical space
         ) {
-            games.forEach { game ->
+            items(games) { game ->
                 GameItem(game = game) {
                     navController.navigate(game.route)
                 }
             }
         }
-
-        Spacer(modifier = Modifier.weight(1f))
 
         // Footer text
         Text(
@@ -125,15 +128,17 @@ fun NeonText(
 ) {
     Text(
         text = text,
-        color = color,
-        fontSize = fontSize,
-        style = TextStyle(
+        style = MaterialTheme.typography.labelLarge.copy(
+            fontFamily = CasinoFont,
+            fontSize = fontSize,
             shadow = Shadow(
                 color = color.copy(alpha = 0.9f),
                 blurRadius = 20f
-            )
+            ),
+            color = color
         ),
         textAlign = TextAlign.Center,
         modifier = Modifier.fillMaxWidth()
     )
+
 }

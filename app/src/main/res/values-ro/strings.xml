@@ -19,56 +19,56 @@
 
     <string name="terms">
         " Termeni și Condiții – Devils Casino    Data intrării în vigoare: [1/10/2025]  Versiunea: 2.0
-
+ \n
         Bun venit la Devils Casino („noi”, „nostru”). Te rugăm să citești cu atenție acești Termeni și Condiții înainte de a utiliza aplicația mobilă Devils Casino.
-
+ \n
         Prin utilizarea aplicației, accepți să respecți acești termeni. Dacă nu ești de acord, nu utiliza aplicația.
-
+ \n
         1. Introducere
 
-        1.1 Devils Casino oferă o platformă de divertisment virtual cu jocuri de tip cazino, în scop recreativ.
-        1.2 Aplicația utilizează o monedă virtuală numită Devil Coins („DC”).
-        1.3 DC nu reprezintă bani reali și nu pot fi schimbați în afara aplicației.
-        1.4 Utilizarea aplicației nu constituie jocuri de noroc sau investiții reale.
+      \n    1.1 Devils Casino oferă o platformă de divertisment virtual cu jocuri de tip cazino, în scop recreativ.
+      \n    1.2 Aplicația utilizează o monedă virtuală numită Devil Coins („DC”).
+       \n   1.3 DC nu reprezintă bani reali și nu pot fi schimbați în afara aplicației.
+       \n   1.4 Utilizarea aplicației nu constituie jocuri de noroc sau investiții reale.
 
-        2. Eligibilitate
+         \n 2. Eligibilitate
+ \n
+         \n 2.1 Trebuie să ai cel puțin 18 ani sau vârsta legală.
+         \n 2.2 Garantezi că îndeplinești cerințele.
+         \n 2.3 Putem suspenda conturile neeligibile.
+ \n
+         \n 3. Înregistrarea Contului
+ \n
+         \n 3.1 Trebuie să furnizezi informații corecte.
+         \n 3.2 Conturile pot fi suspendate pentru fraudă sau inactivitate.
+         \n 3.3 Ești responsabil pentru contul tău.
+ \n
+        \n  4. Devil Coins (DC)
 
-        2.1 Trebuie să ai cel puțin 18 ani sau vârsta legală.
-        2.2 Garantezi că îndeplinești cerințele.
-        2.3 Putem suspenda conturile neeligibile.
+         \n  4.1 Obținere: cumpărături, promoții sau reclame.
+         \n  4.2 Utilizare: doar în aplicație.
+        \n  4.3 Nu reprezintă bani reali.
+    \n      4.4 Pot expira.
 
-        3. Înregistrarea Contului
+     \n     5. Achiziții în Aplicație
 
-        3.1 Trebuie să furnizezi informații corecte.
-        3.2 Conturile pot fi suspendate pentru fraudă sau inactivitate.
-        3.3 Ești responsabil pentru contul tău.
+  \n        5.1 Nerambursabile, conform legii.
+   \n       5.2 Promoții supuse condițiilor.
+  \n        5.3 Autorizezi plățile.
 
-        4. Devil Coins (DC)
+   \n       6. Jocuri și Premii
 
-        4.1 Obținere: cumpărături, promoții sau reclame.
-        4.2 Utilizare: doar în aplicație.
-        4.3 Nu reprezintă bani reali.
-        4.4 Pot expira.
+   \n       6.1 Jocuri doar pentru divertisment.
+    \n      6.2 Premii digitale.
+    \n      6.3 Modificări fără notificare.
+    \n      6.4 Abuzul va fi sancționat.
 
-        5. Achiziții în Aplicație
+    \n      7. Conduita Utilizatorului
 
-        5.1 Nerambursabile, conform legii.
-        5.2 Promoții supuse condițiilor.
-        5.3 Autorizezi plățile.
-
-        6. Jocuri și Premii
-
-        6.1 Jocuri doar pentru divertisment.
-        6.2 Premii digitale.
-        6.3 Modificări fără notificare.
-        6.4 Abuzul va fi sancționat.
-
-        7. Conduita Utilizatorului
-
-        7.1 Nu desfășura activități ilegale.
-        7.2 Încălcările duc la suspendare.
-
-        8. Proprietate Intelectuală
+    \n      7.1 Nu desfășura activități ilegale.
+    \n      7.2 Încălcările duc la suspendare.
+ \n
+     \n     8. Proprietate Intelectuală
 
         8.1 Tot conținutul aparține Devils Casino.
         8.2 Licență limitată.
@@ -151,7 +151,7 @@
 
     <string name="card_in_usage">Card utilizat: %1$s</string>
 
-    <string name="welcome_to_the_devil_s_casino">Bun venit la Cazinoul Diavolului</string>
+    <string name="welcome_to_the_devil_s_casino">Bun venit \n la Cazinoul Diavolului</string>
 
     <string name="the_devil_is_preparing_more_tricks_but_for_now_you_only_get_this_sinner">
         Diavolul pregătește mai multe trucuri, dar deocamdată primești doar acest păcătos
@@ -165,4 +165,13 @@
     <string name="confirm">Confirmă</string>
     <string name="cancel">Anulează</string>
 
+    <string name="wins">Câștiguri:\n %1$s%%</string>
+    <string name="losses">Pierderi:\n %1$s%%</string>
+
+    <string name="you_win">AI CÂȘTIGAT!</string>
+    <string name="you_lost">AI PIERDUT</string>
+    <string name="it_s_a_push">It\'s a push!</string>
+    <string name="you_win_for_now">Câștigi, deocamdată!😈</string>
+    <string name="dealer_wins">Dealerul câștigă!</string>
+    <string name="play_again">JOACĂ DIN NOU</string>
 </resources>

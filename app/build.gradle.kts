@@ -20,15 +20,34 @@ android {
         }
     }
 
+
+
     buildTypes {
-        release {
-            isMinifyEnabled = false
+
+        getByName("debug") {
+            buildConfigField(
+                "String",
+                "BASE_URL",
+                "\"http://10.0.2.2:8080/\""
+            )
+        }
+
+        getByName("release") {
+            buildConfigField(
+                "String",
+                "BASE_URL",
+                "\"https://yourserver.com/\""
+            )
+
+            isMinifyEnabled = true
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
     }
+
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -40,8 +59,10 @@ android {
     }
 
     buildFeatures {
+        buildConfig = true
         compose = true
     }
+
 
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -97,10 +118,11 @@ android {
 
         implementation(libs.retrofit)
         implementation(libs.converter.gson)
+
+        implementation(libs.coil.compose.v250)
+        implementation(libs.androidx.foundation.android)
+        implementation(libs.androidx.foundation.android)
     }
 }
-dependencies {
-    implementation(libs.androidx.foundation.android)
-    implementation(libs.androidx.foundation.android)
-}
+
 

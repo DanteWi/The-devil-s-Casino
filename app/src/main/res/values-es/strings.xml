@@ -147,7 +147,7 @@
 
     <string name="card_in_usage">Tarjeta en uso: %1$s</string>
 
-    <string name="welcome_to_the_devil_s_casino">Bienvenido al Casino del Diablo</string>
+    <string name="welcome_to_the_devil_s_casino">Bienvenido \n al Casino del Diablo</string>
     <string name="the_devil_is_preparing_more_tricks_but_for_now_you_only_get_this_sinner">
         El diablo está preparando más trucos, pero por ahora solo obtienes este pecador
     </string>
@@ -159,5 +159,14 @@
     <string name="buy_dc_for">¿Comprar %1$s DC por %2$s?</string>
     <string name="confirm">Confirmar</string>
     <string name="cancel">Cancelar</string>
+    <string name="wins">Ganancias:\n %1$s%%</string>
+    <string name="losses">Perdidas:\n %1$s%%</string>
+
+    <string name="you_win">¡GANASTE!</string>
+    <string name="you_lost">PERDISTE</string>
+    <string name="it_s_a_push">It\'s a push!</string>
+    <string name="you_win_for_now">¡Ganas, por ahora!😈</string>
+    <string name="dealer_wins">¡El crupier gana!</string>
+    <string name="play_again">JUGAR DE NUEVO</string>
 
 </resources>

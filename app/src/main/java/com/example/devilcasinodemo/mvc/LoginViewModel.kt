@@ -1,51 +1,113 @@
 package com.example.devilcasinodemo.mvc
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.devilcasinodemo.retrofit.ApiClient
 import com.example.devilcasinodemo.mvc.dto.LoginRequest
+import com.example.devilcasinodemo.retrofit.ApiClient
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.HttpException
+import java.io.IOException
 
 class LoginViewModel : ViewModel() {
 
-    var userId by mutableStateOf<Long?>(null)
-        private set
+    companion object {
+        private const val TAG = "LoginViewModel"
+    }
 
-    private var loginState: String? = null
+    var userId by mutableStateOf<Long?>(null)
         private set
 
     var username by mutableStateOf<String?>(null)
         private set
 
-    fun login(email: String, password: String, onResult: (Boolean, String?) -> Unit) {
+    var loginState by mutableStateOf<String?>(null)
+        private set
+
+    var isLoading by mutableStateOf(false)
+        private set
+
+
+    fun login(
+        email: String,
+        password: String,
+        onResult: (Boolean, String) -> Unit
+    ) {
+
+        if (isLoading) return  // prevent spamming
+
         viewModelScope.launch {
-            try {
-                val response = ApiClient.api.login(LoginRequest(email, password))
 
-                if (response.isSuccessful && response.body() != null) {
-                    val body = response.body()!!
+            isLoading = true
+            loginState = "LOADING"
 
-                    loginState = "OK"
-                    userId = body.userId
-                    username = body.name   // or body.username — depending on backend
+            Log.d(TAG, "Attempting login for $email")
 
-                    onResult(true, body.message)
+            runCatching {
 
-                } else {
-                    loginState = "ERROR"
-                    val message = response.errorBody()?.string() ?: "Credenciales incorrectas"
-                    onResult(false, message)
+                withContext(Dispatchers.IO) {
+                    ApiClient.api.login(LoginRequest(email, password))
                 }
 
-            } catch (e: Exception) {
-                loginState = "NETWORK_ERROR"
-                onResult(false, "No se pudo conectar al servidor: ${e.localizedMessage}")
+            }.onSuccess { response ->
+
+                Log.d(TAG, "HTTP status: ${response.code()}")
+
+                if (response.isSuccessful && response.body() != null) {
+
+                    val body = response.body()!!
+
+                    userId = body.userId
+                    username = body.name
+                    loginState = "OK"
+
+                    Log.i(TAG, "Login successful: userId=${body.userId}")
+
+                    onResult(true, body.message ?: "Login correcto")
+
+                } else {
+
+                    loginState = "ERROR"
+
+                    val errorMsg = response.errorBody()?.string() ?: "Credenciales incorrectas"
+
+                    Log.w(TAG, "Login failed: $errorMsg")
+
+                    onResult(false, errorMsg)
+                }
+
+            }.onFailure { throwable ->
+
+                handleError(throwable, onResult)
+
+            }.also {
+
+                isLoading = false
             }
         }
     }
 
-}
 
+    private fun handleError(
+        throwable: Throwable,
+        onResult: (Boolean, String) -> Unit
+    ) {
+
+        val message = when (throwable) {
+            is IOException -> "Sin conexión a internet"
+            is HttpException -> "Error del servidor (${throwable.code()})"
+            else -> "Error inesperado"
+        }
+
+        loginState = "NETWORK_ERROR"
+
+        Log.e(TAG, "Login error", throwable)
+
+        onResult(false, message)
+    }
+}

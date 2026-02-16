@@ -1,4 +1,4 @@
-package com.example.devilcasinodemo.lenguas
+package com.example.devilcasinodemo.util
 
 
 import android.content.Context

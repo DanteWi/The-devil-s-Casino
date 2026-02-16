@@ -20,6 +20,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -45,8 +46,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.devilcasinodemo.R
 import com.example.devilcasinodemo.mvc.RegisterViewModel
+import com.example.devilcasinodemo.ui.theme.CasinoFont
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateAccountScreen(
     navController: NavHostController,
@@ -198,7 +199,13 @@ fun CreateAccountScreen(
                     Spacer(modifier = Modifier.width(8.dp))
                     ClickableText(
                         text = buildAnnotatedString {
-                            withStyle(SpanStyle(color = Color.White)) {
+                            withStyle(
+                                SpanStyle(
+                                    color = Color.White,
+                                    fontFamily = CasinoFont,
+                                    fontSize = 14.sp
+                                )
+                            ) {
                                 append(stringResource(R.string.terms_and_conditions2))
                             }
                         },
@@ -235,9 +242,10 @@ fun CreateAccountScreen(
 
                                     Text(
                                         text = stringResource(R.string.terms),
-                                        color = Color.White,
-                                        fontSize = 14.sp,
-                                        lineHeight = 20.sp
+                                        lineHeight = 20.sp,
+                                        style = MaterialTheme.typography.labelLarge.copy(
+                                            fontFamily = CasinoFont),
+                                        fontSize = 15.sp
                                     )
 
                                     Spacer(modifier = Modifier.height(16.dp))
@@ -249,7 +257,10 @@ fun CreateAccountScreen(
                                         Text(
                                             "Close",
                                             color = Color.Black,
-                                            fontWeight = FontWeight.Bold
+                                            fontWeight = FontWeight.Bold,
+                                                    style = MaterialTheme.typography.labelLarge.copy(
+                                                    fontFamily = CasinoFont),
+                                            fontSize = 15.sp
                                         )
                                     }
                                 }

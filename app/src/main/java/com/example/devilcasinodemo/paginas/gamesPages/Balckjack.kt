@@ -1,5 +1,6 @@
 package com.example.devilcasinodemo.paginas.gamesPages
 
+import WalletViewModel
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -21,6 +22,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,13 +46,16 @@ import androidx.navigation.NavHostController
 import com.example.devilcasinodemo.R
 import com.example.devilcasinodemo.mvc.BlackjackViewModel
 import com.example.devilcasinodemo.mvc.dto.BlackjackState
+import androidx.compose.runtime.derivedStateOf
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BlackjackScreen(
     navHostController: NavHostController,
     viewModel: BlackjackViewModel,
-    userId: Long
+    userId: Long,
+    walletViewModel: WalletViewModel
 ) {
     var showEndGamePopup by remember { mutableStateOf(false) }
 
@@ -61,7 +66,14 @@ fun BlackjackScreen(
     val state = viewModel.gameState
     val canHit = state.playerTotal < 21 && !state.finished
     val canStand = !state.finished
-
+    val bet = betAmount.toDoubleOrNull() ?: 0.0
+    val isBetValid by remember(bet, walletViewModel.walletAmount) {
+        derivedStateOf {
+            bet > 0 && bet <= walletViewModel.walletAmount
+        }
+    }
+    val neonOrange = Color(0xFFFF6600)
+    val backgroundColor = Color(0xFF0C0602)
 
     // For dealer animation
     var dealerVisible by remember { mutableStateOf(false) }
@@ -102,30 +114,42 @@ fun BlackjackScreen(
                 ) {
                     Text(
                         text = stringResource(R.string.enter_your_bet_amount),
-                        color = Color.White,
+                        color = neonOrange,
                         fontSize = 16.sp,
                         modifier = Modifier.padding(bottom = 12.dp)
                     )
 
+// Bet Amount Field
                     androidx.compose.material3.OutlinedTextField(
                         value = betAmount,
                         onValueChange = { betAmount = it },
                         singleLine = true,
                         textStyle = LocalTextStyle.current.copy(
                             fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            color = neonOrange // text color
+                        ),
+                        label = { Text(stringResource(R.string.bet_amount), color = neonOrange) },
+                        colors = androidx.compose.material3.TextFieldDefaults.outlinedTextFieldColors(
+
+                            focusedBorderColor = neonOrange,
+                            unfocusedBorderColor = neonOrange,
+                            cursorColor = neonOrange,
+                            containerColor = backgroundColor, // text field background
+                            errorBorderColor = Color.Red
                         ),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 8.dp),
-                        label = { Text(stringResource(R.string.bet_amount), fontSize = 14.sp) }
+                            .padding(horizontal = 8.dp)
                     )
+
                 }
             },
 
             confirmButton = {
                 Button(
                     onClick = { startGame() },
+                    enabled = isBetValid, // <-- disables button if bet invalid
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(52.dp),
@@ -134,10 +158,13 @@ fun BlackjackScreen(
                     Text(
                         stringResource(R.string.start_game),
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        color = if (isBetValid) Color.Red else Color.Red // optional: indicate disabled
                     )
                 }
             }
+
+
         )
     }
 
@@ -223,7 +250,7 @@ fun BlackjackScreen(
                 )
 
                 Text(
-                    text = if (isWin) "YOU WIN!" else "YOU LOST",
+                    text = if (isWin) stringResource(R.string.you_win) else stringResource(R.string.you_lost),
                     color = if (isWin) Color(0xFFFFD700) else Color.Red,
                     fontSize = 28.sp,
                     fontWeight = FontWeight.ExtraBold
@@ -234,9 +261,9 @@ fun BlackjackScreen(
                 if (state != null) {
                     Text(
                         text = when (state.status) {
-                            "PUSH" -> "It's a push!"
-                            "PLAYER_WIN" -> "You win, for now!😈"
-                            else -> "Dealer wins!"
+                            "PUSH" -> stringResource(R.string.it_s_a_push)
+                            "PLAYER_WIN" -> stringResource(R.string.you_win_for_now)
+                            else -> stringResource(R.string.dealer_wins)
                         },
                         color = Color.White,
                         fontSize = 18.sp
@@ -270,7 +297,7 @@ fun BlackjackScreen(
                             .height(52.dp),
                         shape = RoundedCornerShape(14.dp)
                     ) {
-                        Text("PLAY AGAIN", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                        Text(stringResource(R.string.play_again), fontSize = 16.sp, fontWeight = FontWeight.Bold)
                     }
 
                     Button(
@@ -365,7 +392,7 @@ fun BlackjackTable(
             CardRow(state.playerCards)
 
             // CHIPS
-            ChipRow(onChipClick)
+            //ChipRow(onChipClick)
 
             // HIT / STAND
             Row(

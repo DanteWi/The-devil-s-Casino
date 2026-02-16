@@ -8,10 +8,14 @@ import com.example.devilcasinodemo.mvc.dto.RegisterResponse
 import com.example.devilcasinodemo.mvc.dto.StartGameRequest
 import com.example.devilcasinodemo.mvc.dto.WalletResponse
 import com.example.devilcasinodemo.mvc.dto.WinLossResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -60,6 +64,12 @@ interface ApiService {
         @Path("userId") userId: Long
     ): WinLossResponse
 
+    @Multipart
+    @POST("api/users/avatar")
+    suspend fun uploadAvatar(
+        @Part file: MultipartBody.Part,
+        @Part("userId") userId: RequestBody
+    ): Response<String>
 
 }
 

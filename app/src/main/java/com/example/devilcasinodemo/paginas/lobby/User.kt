@@ -1,6 +1,13 @@
 package com.example.devilcasinodemo.paginas.lobby
-
+import WalletViewModel
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import com.example.devilcasinodemo.mvc.UserProfileViewModel
+import androidx.compose.runtime.collectAsState
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -16,15 +23,21 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.example.devilcasinodemo.R
+import com.example.devilcasinodemo.mvc.LoginViewModel
 import com.example.devilcasinodemo.mvc.UserStatsViewModel
 import com.example.devilcasinodemo.mvc.dto.UserStatsViewModelFactory
 import com.example.devilcasinodemo.retrofit.ApiClient
@@ -39,21 +52,51 @@ data class CardItem(val name: String, val type: String)
 // MAIN USER SCREEN
 // ------------------------------------------------------
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun User(navController: NavHostController, userId: Long) {
+fun User(
+    navController: NavHostController,
+    userId: Long,
+    viewModel: LoginViewModel,
+    walletviewModel: WalletViewModel
+) {
+    val context = LocalContext.current
+    val wallet: WalletViewModel = walletviewModel
+    val username = viewModel.username
+    val profileViewModel: UserProfileViewModel = viewModel()
+    val avatarVersion by profileViewModel.avatarVersion.collectAsState()
+    val uploading by profileViewModel.uploading.collectAsState()
+    val avatarUrl =
+        ApiClient.BASE_URL +
+                "api/users/avatar/$userId?v=$avatarVersion"
+    val imagePicker =
+        rememberLauncherForActivityResult(
+            ActivityResultContracts.GetContent()
+        ) { uri ->
+
+            if (uri != null) {
+                profileViewModel.uploadAvatar(
+                    context = context,
+                    uri = uri,
+                    userId = userId
+                )
+            }
+        }
+    val painter = rememberAsyncImagePainter(model = avatarUrl)
+
 
     val api = remember { ApiClient.api }
 
-    val viewModel: UserStatsViewModel = viewModel(
+    val statsViewModel: UserStatsViewModel = viewModel(
         factory = UserStatsViewModelFactory(api)
     )
 
     LaunchedEffect(userId) {
-        viewModel.loadStats(userId)
+        statsViewModel.loadStats(userId)
     }
 
-    val winPercent = viewModel.winRate
-    val losePercent = viewModel.lossRate
+    val winPercent = statsViewModel.winRate
+    val losePercent = statsViewModel.lossRate
 
     // ---------- CARD PICKER STATE ----------
     var showCardDialog by remember { mutableStateOf(false) }
@@ -73,7 +116,9 @@ fun User(navController: NavHostController, userId: Long) {
     // ------------------------------------------------------
     // SCREEN LAYOUT
     // ------------------------------------------------------
-
+    LaunchedEffect(userId) {
+        wallet.fetchWallet(userId)
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -91,16 +136,47 @@ fun User(navController: NavHostController, userId: Long) {
         Box(
             modifier = Modifier
                 .size(160.dp)
-                .background(Color(0xFFB71C1C), RoundedCornerShape(24.dp)),
+                .clip(CircleShape)
+                .background(Color(0xFFB71C1C))
+                .clickable(enabled = !uploading) {
+                    imagePicker.launch("image/*")
+                },
             contentAlignment = Alignment.Center
         ) {
-            Icon(
-                imageVector = Icons.Default.Person,
-                contentDescription = null,
-                tint = Color.Black,
-                modifier = Modifier.size(90.dp)
-            )
+
+            if (painter.state is AsyncImagePainter.State.Error) {
+
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = null,
+                    tint = Color.Black,
+                    modifier = Modifier.size(90.dp)
+                )
+
+            } else {
+
+                Image(
+                    painter = painter,
+                    contentDescription = "Avatar",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            }
+
+            // Upload indicator
+            if (uploading) {
+                Box(
+                    modifier = Modifier
+                        .matchParentSize()
+                        .background(Color.Black.copy(alpha = 0.5f)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(color = Color.Yellow)
+                }
+            }
         }
+
+
 
         Spacer(modifier = Modifier.height(30.dp))
 
@@ -108,9 +184,9 @@ fun User(navController: NavHostController, userId: Long) {
         // USER INFO
         // --------------------------------------------------
 
-        Text("(USER NAME)", color = Color.Yellow, fontSize = 26.sp)
-
-        Text("XXXX   DC", color = Color(0xFFFF1744), fontSize = 26.sp)
+        Text(text = username ?: "Unknown user", color = Color.Yellow, fontSize = 26.sp)
+        Spacer(modifier = Modifier.height(30.dp))
+        Text(text = "${wallet?.walletAmount ?: 0.0} DC", color = Color(0xFFFF1744), fontSize = 26.sp)
 
         Spacer(modifier = Modifier.height(30.dp))
 
@@ -238,12 +314,12 @@ fun DonutChart(wins: Double, losses: Double, size: Dp) {
 
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                text = "Wins: ${String.format("%.2f", wins)}%",
+                text = stringResource(R.string.wins, String.format("%.2f", wins)),
                 color = Color.White,
                 fontSize = 14.sp
             )
             Text(
-                text = "Losses: ${String.format("%.2f", losses)}%",
+                text = stringResource(R.string.losses, String.format("%.2f", losses)),
                 color = Color.White,
                 fontSize = 14.sp
             )

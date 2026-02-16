@@ -37,8 +37,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.devilcasinodemo.R
-import com.example.devilcasinodemo.lenguas.LocaleHelper
-import com.example.devilcasinodemo.music.MusicManager
+import com.example.devilcasinodemo.util.LocaleHelper
+import com.example.devilcasinodemo.util.MusicManager
 
 @Composable
 fun SettingsScreen() {
@@ -109,6 +109,7 @@ fun SettingsScreen() {
                 text = if (isMuted) stringResource(R.string.music_muted) else stringResource(R.string.mute_music),
                 color = Color.Black,
                 fontWeight = FontWeight.Bold
+
             )
         }
 

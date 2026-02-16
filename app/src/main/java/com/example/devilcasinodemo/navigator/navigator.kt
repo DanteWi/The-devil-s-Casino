@@ -28,6 +28,7 @@ fun AppNavHost(navController: NavHostController, startDestination: String, modif
     // Shared ViewModels across screens
     val loginViewModel: LoginViewModel = viewModel()
     val blackjackViewModel: BlackjackViewModel = viewModel()
+    val walletViewModel :WalletViewModel = viewModel()
 
     NavHost(
         navController = navController,
@@ -59,6 +60,7 @@ fun AppNavHost(navController: NavHostController, startDestination: String, modif
                 BlackjackScreen(
                     navHostController = navController,
                     viewModel = blackjackViewModel,
+                    walletViewModel = walletViewModel,
                     userId = userId
                 )
             } else {
@@ -96,7 +98,10 @@ fun AppNavHost(navController: NavHostController, startDestination: String, modif
             if (userId != null) {
                 User(
                     navController = navController,
-                    userId = userId
+                    userId = userId,
+                    viewModel = loginViewModel,
+                    walletviewModel = walletViewModel
+
                 )
             } else {
                 LaunchedEffect(Unit) {

@@ -30,7 +30,7 @@
     <string name="enter_your_bet_amount">Enter your bet amount</string>
     <string name="place_your_bet">PLACE YOUR BET</string>
     <string name="card_in_usage">Card in usage: %1$s</string>
-    <string name="welcome_to_the_devil_s_casino">Welcome to the Devil\'s Casino</string>
+    <string name="welcome_to_the_devil_s_casino">Welcome to \n The Devil\'s Casino</string>
     <string name="the_devil_is_preparing_more_tricks_but_for_now_you_only_get_this_sinner">The devil is preparing more tricks, but for now you only get this sinner</string>
     <string name="settings">Settings</string>
     <string name="free">Free</string>
@@ -38,5 +38,14 @@
     <string name="buy_dc_for">Buy %1$s DC for %2$s ?</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
+    <string name="wins">Wins:\n %1$s%%</string>
+    <string name="losses">Losses:\n %1$s%%</string>
+
+    <string name="you_win">YOU WIN!</string>
+    <string name="you_lost">YOU LOST</string>
+    <string name="it_s_a_push">It\'s a push!</string>
+    <string name="you_win_for_now">You win, for now!😈</string>
+    <string name="dealer_wins">Dealer wins!</string>
+    <string name="play_again">PLAY AGAIN</string>
 
 </resources>

@@ -19,6 +19,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -41,11 +42,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.devilcasinodemo.R
 import com.example.devilcasinodemo.mvc.LoginViewModel
 import com.example.devilcasinodemo.mvc.RegisterViewModel
+import com.example.devilcasinodemo.ui.theme.CasinoFont
 import com.example.devilcasinodemo.ui.theme.DevilCasinoDemoTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -77,7 +80,7 @@ fun Login(navController: NavHostController, viewModel: LoginViewModel = LoginVie
         ) {
             // Logo
             Image(
-                painter = painterResource(id = R.drawable._7e8780e_f2a5_4a66_9a91_b81658c397f3),
+                painter = painterResource(id = R.drawable.chatgpt_image_2_nov__2025__21_23_04),
                 contentDescription = "Login Sign",
                 modifier = Modifier.padding(10.dp),
                 contentScale = ContentScale.Fit
@@ -170,7 +173,7 @@ fun Login(navController: NavHostController, viewModel: LoginViewModel = LoginVie
                                         }
                                         "Login correcto"
                                     }
-                                    errorMessage != null -> errorMessage
+                                    true -> errorMessage
                                     else -> "Error desconocido"
                                 }
                             }
@@ -185,7 +188,14 @@ fun Login(navController: NavHostController, viewModel: LoginViewModel = LoginVie
                         .fillMaxWidth()
                         .height(50.dp)
                 ) {
-                    Text(stringResource(R.string.login), color = Color.Black)
+                    Text(
+                        text = stringResource(R.string.login),
+                        style = MaterialTheme.typography.labelLarge.copy(
+                            fontFamily = CasinoFont,
+                            fontSize = 20.sp,
+                            color = Color.Red
+                        )
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
