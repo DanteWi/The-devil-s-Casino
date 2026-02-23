@@ -74,7 +74,7 @@ fun SettingsScreen() {
             text = stringResource(R.string.settings),
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
-            color = Color(0xFFFF1414),
+            color = Color(0xFFFF9500),
             textAlign = TextAlign.Center
         )
 
@@ -84,7 +84,7 @@ fun SettingsScreen() {
 
         Text(
             text = stringResource(R.string.music_volume),
-            color = Color.Red,
+            color = Color(0xFFFF9500),
             fontSize = 20.sp
         )
 
@@ -98,7 +98,7 @@ fun SettingsScreen() {
                 if (isMuted) musicVolume = 0f
             },
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (isMuted) Color.Red else Color(0xFFDE5D02)
+                containerColor = if (isMuted) Color.Red else Color(0xFFFF9500)
             ),
             shape = RoundedCornerShape(20.dp),
             modifier = Modifier
@@ -120,7 +120,7 @@ fun SettingsScreen() {
 
         Text(
             text = "Language",
-            color = Color.Red,
+            color = Color(0xFFFF9500),
             fontSize = 20.sp
         )
 
@@ -167,7 +167,7 @@ fun SettingsScreen() {
 
         Text(
             text = "Selected: $selectedLanguage",
-            color = Color.White,
+            color = Color(0xFFDE5D02),
             fontSize = 16.sp
         )
     }
@@ -207,7 +207,7 @@ fun LanguageButton(
                 RoundedCornerShape(12.dp)
             )
             .background(
-                if (isSelected) Color(0xFFFFE082) else Color.DarkGray,
+                if (isSelected) Color(0xFFFF9500) else Color.DarkGray,
                 RoundedCornerShape(12.dp)
             )
             .clickable { onClick() },  // now works

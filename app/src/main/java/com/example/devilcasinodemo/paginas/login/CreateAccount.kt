@@ -19,11 +19,14 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,6 +40,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.withStyle
@@ -48,6 +52,7 @@ import com.example.devilcasinodemo.R
 import com.example.devilcasinodemo.mvc.RegisterViewModel
 import com.example.devilcasinodemo.ui.theme.CasinoFont
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateAccountScreen(
     navController: NavHostController,
@@ -114,6 +119,12 @@ fun CreateAccountScreen(
                     },
                     label = { Text(stringResource(R.string.user_name), color = neonOrange) },
                     isError = userError,
+                    textStyle = LocalTextStyle.current.copy(color = neonOrange),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = neonOrange,
+                        unfocusedBorderColor = neonOrange,
+                        cursorColor = neonOrange
+                    ),
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -127,6 +138,12 @@ fun CreateAccountScreen(
                     },
                     label = { Text(stringResource(R.string.email), color = neonOrange) },
                     isError = emailError,
+                    textStyle = LocalTextStyle.current.copy(color = neonOrange),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = neonOrange,
+                        unfocusedBorderColor = neonOrange,
+                        cursorColor = neonOrange
+                    ),
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -141,6 +158,12 @@ fun CreateAccountScreen(
                     label = { Text(stringResource(R.string.password), color = neonOrange) },
                     visualTransformation = PasswordVisualTransformation(),
                     isError = passwordError,
+                    textStyle = LocalTextStyle.current.copy(color = neonOrange),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = neonOrange,
+                        unfocusedBorderColor = neonOrange,
+                        cursorColor = neonOrange
+                    ),
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -155,6 +178,12 @@ fun CreateAccountScreen(
                     label = { Text(stringResource(R.string.repeat_password), color = neonOrange) },
                     visualTransformation = PasswordVisualTransformation(),
                     isError = rpasswordError,
+                    textStyle = LocalTextStyle.current.copy(color = neonOrange),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = neonOrange,
+                        unfocusedBorderColor = neonOrange,
+                        cursorColor = neonOrange
+                    ),
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -164,7 +193,8 @@ fun CreateAccountScreen(
                     Text(
                         text = message,
                         color = if (isSuccess) Color.Green else Color.Red,
-                        fontSize = 14.sp
+                        fontSize = 14.sp,
+
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                 }
@@ -189,19 +219,26 @@ fun CreateAccountScreen(
                         .fillMaxWidth()
                         .height(50.dp)
                 ) {
-                    Text(stringResource(R.string.create_account), color = Color.Black)
+                    Text(stringResource(R.string.create_account), color = Color.Red)
                 }
 
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Checkbox(checked = checked, onCheckedChange = { checked = it })
+                    Checkbox(
+                        checked = checked,
+                        onCheckedChange = { checked = it },
+                        colors = CheckboxDefaults.colors(
+                            uncheckedColor = neonOrange,
+                            checkmarkColor = Color.Red
+                        )
+                    )
                     Spacer(modifier = Modifier.width(8.dp))
                     ClickableText(
                         text = buildAnnotatedString {
                             withStyle(
                                 SpanStyle(
-                                    color = Color.White,
+                                    color = neonOrange,
                                     fontFamily = CasinoFont,
                                     fontSize = 14.sp
                                 )
@@ -244,7 +281,7 @@ fun CreateAccountScreen(
                                         text = stringResource(R.string.terms),
                                         lineHeight = 20.sp,
                                         style = MaterialTheme.typography.labelLarge.copy(
-                                            fontFamily = CasinoFont),
+                                            fontFamily = FontFamily.Default),
                                         fontSize = 15.sp
                                     )
 
@@ -256,7 +293,7 @@ fun CreateAccountScreen(
                                     ) {
                                         Text(
                                             "Close",
-                                            color = Color.Black,
+                                            color = Color.Red,
                                             fontWeight = FontWeight.Bold,
                                                     style = MaterialTheme.typography.labelLarge.copy(
                                                     fontFamily = CasinoFont),

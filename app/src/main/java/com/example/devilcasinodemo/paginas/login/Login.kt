@@ -31,6 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
@@ -173,7 +174,7 @@ fun Login(navController: NavHostController, viewModel: LoginViewModel = LoginVie
                                         }
                                         "Login correcto"
                                     }
-                                    true -> errorMessage
+                                    true -> "Errot"
                                     else -> "Error desconocido"
                                 }
                             }
@@ -193,7 +194,8 @@ fun Login(navController: NavHostController, viewModel: LoginViewModel = LoginVie
                         style = MaterialTheme.typography.labelLarge.copy(
                             fontFamily = CasinoFont,
                             fontSize = 20.sp,
-                            color = Color.Red
+                            color = Color.Red,
+
                         )
                     )
                 }
@@ -223,7 +225,12 @@ fun Login(navController: NavHostController, viewModel: LoginViewModel = LoginVie
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                Text(text = stringResource(R.string.new_here_come_with_me))
+                Text(text = stringResource(R.string.new_here_come_with_me),
+                    style = MaterialTheme.typography.labelLarge.copy(
+                    fontFamily = CasinoFont,
+                        fontSize = 15.sp,
+                    color = Color.Red
+                ))
                 Spacer(modifier = Modifier.height(16.dp))
 
                 ClickableText(

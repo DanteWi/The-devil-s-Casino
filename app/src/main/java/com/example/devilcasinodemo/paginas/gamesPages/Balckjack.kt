@@ -47,6 +47,7 @@ import com.example.devilcasinodemo.R
 import com.example.devilcasinodemo.mvc.BlackjackViewModel
 import com.example.devilcasinodemo.mvc.dto.BlackjackState
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.ui.draw.rotate
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -72,7 +73,7 @@ fun BlackjackScreen(
             bet > 0 && bet <= walletViewModel.walletAmount
         }
     }
-    val neonOrange = Color(0xFFFF6600)
+    val neonOrange = Color(0xFFFF9500)
     val backgroundColor = Color(0xFF0C0602)
 
     // For dealer animation
@@ -203,8 +204,10 @@ fun BlackjackScreen(
                     viewModel.stand(userId)
                 }
             },
-            onChipClick = { chip -> betAmount = (betAmount.toInt() + chip).toString() }
+            canHit = canHit && !loading,
+            canStand = canStand && !loading
         )
+
     }
 
     // END GAME
@@ -297,7 +300,7 @@ fun BlackjackScreen(
                             .height(52.dp),
                         shape = RoundedCornerShape(14.dp)
                     ) {
-                        Text(stringResource(R.string.play_again), fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                        Text(stringResource(R.string.play_again), fontSize = 16.sp, color = Color.Red)
                     }
 
                     Button(
@@ -311,7 +314,7 @@ fun BlackjackScreen(
                             .height(52.dp),
                         shape = RoundedCornerShape(14.dp)
                     ) {
-                        Text("LOBBY", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                        Text("LOBBY", fontSize = 16.sp, color = Color.Red)
                     }
                 }
             }
@@ -326,14 +329,7 @@ fun BlackjackScreen(
 }
 
 
-fun getCardRes(card: String): Int {
-    return when(card) {
-       // "AH" -> R.drawable.ah
-       // "2H" -> R.drawable._2h
-        // Add all 52 cards
-        else -> R.drawable.cardback
-    }
-}
+
 @Composable
 fun CardPlaceholder(card: String, width: Dp = 100.dp, height: Dp = 150.dp) {
     Box(
@@ -356,7 +352,8 @@ fun BlackjackTable(
     state: BlackjackState,
     onHit: () -> Unit,
     onStand: () -> Unit,
-    onChipClick: (Int) -> Unit
+    canHit: Boolean,
+    canStand: Boolean
 ) {
     Box(
         modifier = Modifier
@@ -364,95 +361,65 @@ fun BlackjackTable(
             .background(Color.Black),
         contentAlignment = Alignment.Center
     ) {
-
         Column(
             modifier = Modifier
                 .fillMaxWidth(0.9f)
                 .fillMaxHeight(0.9f)
-                .background(
-                    Color(0xFFB11226),
-                    RoundedCornerShape(40.dp)
-                )
+                .background(Color(0xFFB11226), RoundedCornerShape(40.dp))
                 .padding(16.dp),
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-            // DEALER CARDS (TOP)
+            // DEALER CARDS
             CardRow(state.dealerCards)
 
-            // DEVIL CENTER
+            // CENTER IMAGE
             Image(
                 painter = painterResource(R.drawable.devilstick),
                 contentDescription = null,
                 modifier = Modifier.size(120.dp)
             )
 
-            // PLAYER CARDS (BOTTOM)
+            // PLAYER CARDS
             CardRow(state.playerCards)
 
-            // CHIPS
-            //ChipRow(onChipClick)
-
-            // HIT / STAND
+            // HIT / STAND BUTTONS
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                CasinoButton("HIT", onHit)
-                CasinoButton("STAND", onStand)
+                CasinoButton("HIT", onHit, enabled = canHit)
+                CasinoButton("STAND", onStand, enabled = canStand)
             }
         }
     }
 }
+
+
 @Composable
 fun CardRow(cards: List<String>) {
-    val scrollState = rememberScrollState()
-
     Row(
-        modifier = Modifier
-            .horizontalScroll(scrollState),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.horizontalScroll(rememberScrollState())
     ) {
         for (card in cards) {
-            CardPlaceholder(card = card, width = 100.dp, height = 150.dp)
+            CardComposable(card)
         }
     }
 }
 
 
-@Composable
-fun ChipRow(onChipClick: (Int) -> Unit) {
-    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        Chip(R.drawable.jet1, 1, onChipClick)
-        Chip(R.drawable.jet5, 5, onChipClick)
-        Chip(R.drawable.jet10, 10, onChipClick)
-        Chip(R.drawable.jet50, 50, onChipClick)
-        Chip(R.drawable.jet100, 100, onChipClick)
-    }
-}
 
 @Composable
-fun Chip(drawable: Int, value: Int, onClick: (Int) -> Unit) {
-    Image(
-        painter = painterResource(drawable),
-        contentDescription = null,
-        modifier = Modifier
-            .size(64.dp)
-            .clickable { onClick(value) }
-    )
-}
-@Composable
-fun CasinoButton(text: String, onClick: () -> Unit) {
+fun CasinoButton(text: String, onClick: () -> Unit, enabled: Boolean = true) {
     Button(
         onClick = onClick,
-        modifier = Modifier
-            .width(140.dp)
-            .height(52.dp),
+        enabled = enabled,
+        modifier = Modifier.width(140.dp).height(52.dp),
         shape = RoundedCornerShape(26.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color(0xFFFF9933)
+            containerColor = if(enabled) Color(0xFFFF9933) else Color.Gray
         )
     ) {
         Text(
@@ -463,11 +430,76 @@ fun CasinoButton(text: String, onClick: () -> Unit) {
         )
     }
 }
+
+fun suitSymbol(suit: Char): String = when(suit) {
+    'H' -> "♥"
+    'D' -> "♦"
+    'C' -> "♣"
+    'S' -> "♠"
+    else -> "?"
+}
+fun getPipLayout(rank: String): List<List<Boolean>> = when(rank) {
+    "A" -> listOf(listOf(true)) // single pip in the middle
+    "2" -> listOf(listOf(true), listOf(true))
+    "3" -> listOf(listOf(true), listOf(true), listOf(true))
+    "4" -> listOf(listOf(true, true), listOf(true, true))
+    "5" -> listOf(listOf(true, true), listOf(true), listOf(true, true))
+    "6" -> listOf(listOf(true, true, true), listOf(true, true, true))
+    "7" -> listOf(listOf(true, true, true), listOf(true), listOf(true, true, true))
+    "8" -> listOf(listOf(true, true, true), listOf(true, true), listOf(true, true, true))
+    "9" -> listOf(listOf(true, true, true), listOf(true, true, true), listOf(true, true, true))
+    "10" -> listOf(listOf(true, true, true, true), listOf(true, true, true, true), listOf(true, true))
+    else -> listOf() // face cards will have their own rendering
+}
 @Composable
-fun EmptyCardSlot() {
+fun CardComposable(card: String, width: Dp = 100.dp, height: Dp = 150.dp) {
+    val rank = card.dropLast(1)
+    val suit = card.last()
+    val symbol = suitSymbol(suit)
+
     Box(
         modifier = Modifier
-            .size(60.dp, 90.dp)
-            .background(Color.Black, RoundedCornerShape(8.dp))
-    )
+            .size(width, height)
+            .background(Color.White, RoundedCornerShape(12.dp))
+            .border(2.dp, Color.Black, RoundedCornerShape(12.dp))
+            .padding(8.dp)
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            // Top-left rank & suit
+            Text("$rank$symbol", color = if (suit == 'H' || suit == 'D') Color.Red else Color.Black)
+
+            // Pips (for numbered cards)
+            val pipLayout = getPipLayout(rank)
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.SpaceEvenly,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                for (row in pipLayout) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        for (pip in row) {
+                            if (pip) {
+                                Text(symbol, color = if (suit == 'H' || suit == 'D') Color.Red else Color.Black, fontSize = 20.sp)
+                            } else {
+                                Spacer(modifier = Modifier.width(20.dp))
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Bottom-right rank & suit (rotated)
+            Text(
+                "$rank$symbol",
+                color = if (suit == 'H' || suit == 'D') Color.Red else Color.Black,
+                modifier = Modifier.rotate(180f)
+            )
+        }
+    }
 }

@@ -169,6 +169,7 @@ fun ShopCard(
 
     val cardColor = if (isOnCooldown) Color.DarkGray else Color(0xFF141212)
     val textAlpha = if (isOnCooldown) 0.5f else 1f
+    val neonOrange = Color(0xFFFF6600)
 
     Box(
         modifier = Modifier

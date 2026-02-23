@@ -60,6 +60,7 @@ fun User(
     viewModel: LoginViewModel,
     walletviewModel: WalletViewModel
 ) {
+    val neonOrange = Color(0xFFFF6600)
     val context = LocalContext.current
     val wallet: WalletViewModel = walletviewModel
     val username = viewModel.username
@@ -210,7 +211,7 @@ fun User(
             modifier = Modifier
                 .fillMaxWidth(0.85f)
                 .height(90.dp)
-                .border(3.dp, Color.Red, RoundedCornerShape(20.dp))
+                .border(3.dp, neonOrange, RoundedCornerShape(20.dp))
                 .padding(16.dp),
 
             contentAlignment = Alignment.Center
@@ -229,7 +230,7 @@ fun User(
 
                 Text(
                     stringResource(R.string.card_in_usage, selectedCard.name),
-                    color = Color.White
+                    color = neonOrange
                 )
             }
         }
@@ -290,7 +291,7 @@ fun User(
 fun DonutChart(wins: Double, losses: Double, size: Dp) {
     val sweepWin = (wins / (wins + losses)) * 360
     val sweepLoss = 360 - sweepWin
-
+    val neonOrange = Color(0xFFFF6600)
     Box(contentAlignment = Alignment.Center, modifier = Modifier.size(size)) {
         Canvas(modifier = Modifier.size(size)) {
             val strokeWidth = size.toPx() * 0.20f
@@ -315,12 +316,12 @@ fun DonutChart(wins: Double, losses: Double, size: Dp) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
                 text = stringResource(R.string.wins, String.format("%.2f", wins)),
-                color = Color.White,
+                color = Color.Yellow,
                 fontSize = 14.sp
             )
             Text(
                 text = stringResource(R.string.losses, String.format("%.2f", losses)),
-                color = Color.White,
+                color = Color.Red,
                 fontSize = 14.sp
             )
         }
@@ -377,14 +378,14 @@ fun CardPickerDialog(
 
                         Spacer(Modifier.width(12.dp))
 
-                        Text(card.name)
+                        Text(card.name, color = Color.Red)
                     }
                 }
 
                 Spacer(Modifier.height(12.dp))
 
                 Button(onClick = onAdd) {
-                    Text(stringResource(R.string.add_new_card))
+                    Text(stringResource(R.string.add_new_card), color = Color.Red)
                 }
             }
         },
