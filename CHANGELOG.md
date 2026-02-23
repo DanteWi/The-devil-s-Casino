@@ -1,5 +1,31 @@
 # Changelog
 
+## v0.6.0 - 2026-02-23
+
+### Added
+
+* Implementación de un **manejo de excepciones más completo y estructurado** en backend y frontend.
+* Configuración de **entorno de desarrollo y entorno de producción**.
+* Nueva **interfaz artística para Blackjack**:
+  * Generación visual dinámica de cartas.
+  * Reemplazo de los antiguos placeholders por cartas personalizadas.
+
+### Improved
+
+* Uniformización de todas las pantallas:
+  * Reglas de diseño consistentes en toda la aplicación.
+  * Comportamiento estandarizado entre vistas.
+* Mejora en el tiempo de espera en **Blackjack**.
+* Deshabilitación automática de botones cuando el jugador finaliza su turno.
+* Fluidez general del juego optimizada.
+* Mayor estabilidad ante errores inesperados.
+
+### Notes
+
+* La arquitectura ahora está preparada para escalar con mayor facilidad.
+* Mejor base técnica para futuras implementaciones (incluyendo Devil Dice).
+* Experiencia de juego más sólida y consistente en toda la aplicación.
+
 ## v0.5.0 - 2026-02-09
 
 ### Added
