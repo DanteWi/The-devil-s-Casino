@@ -80,6 +80,10 @@ fun BlackjackScreen(
     var dealerVisible by remember { mutableStateOf(false) }
     var dealerCardsAnimated by remember { mutableStateOf(listOf<String>()) }
 
+    LaunchedEffect(Unit) {
+        dealerVisible = false
+        dealerCardsAnimated = emptyList()
+    }
     // Start game
     fun startGame() {
         val bet = betAmount.toDoubleOrNull() ?: return
@@ -293,6 +297,9 @@ fun BlackjackScreen(
                     Button(
                         onClick = {
                             showBetDialog = true
+                            showEndGamePopup = false
+                            dealerVisible = false
+                            dealerCardsAnimated = emptyList()
                             viewModel.resetGame()
                         },
                         modifier = Modifier

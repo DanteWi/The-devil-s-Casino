@@ -1,6 +1,7 @@
 package com.example.devilcasinodemo.retrofit
 
 import com.example.devilcasinodemo.mvc.dto.BlackjackState
+import com.example.devilcasinodemo.mvc.dto.LiarDiceState
 import com.example.devilcasinodemo.mvc.dto.LoginRequest
 import com.example.devilcasinodemo.mvc.dto.LoginResponse
 import com.example.devilcasinodemo.mvc.dto.RegisterRequest
@@ -71,5 +72,39 @@ interface ApiService {
         @Part("userId") userId: RequestBody
     ): Response<String>
 
+
+    //DevilDice
+
+    @POST("api/liardice/create")
+    suspend fun createDiceGame(
+        @Query("userId") userId: Long,
+        @Query("bet") bet: Double,
+        @Query("vsAI") vsAI: Boolean
+    ): LiarDiceState
+
+    @POST("api/liardice/join")
+    suspend fun joinDiceGame(
+        @Query("gameId") gameId: Long,
+        @Query("userId") userId: Long
+    ): LiarDiceState
+
+    @POST("api/liardice/bet")
+    suspend fun diceBet(
+        @Query("gameId") gameId: Long,
+        @Query("userId") userId: Long,
+        @Query("quantity") quantity: Int,
+        @Query("faceValue") faceValue: Int
+    )
+
+    @POST("api/liardice/call")
+    suspend fun callLie(
+        @Query("gameId") gameId: Long,
+        @Query("userId") userId: Long
+    )
+
+    @GET("api/liardice/state")
+    suspend fun getDiceState(
+        @Query("userId") userId: Long
+    ): LiarDiceState
 }
 

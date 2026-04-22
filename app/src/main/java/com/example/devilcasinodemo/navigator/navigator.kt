@@ -12,9 +12,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.devilcasinodemo.mvc.BlackjackViewModel
+import com.example.devilcasinodemo.mvc.DevilDiceViewModel
 import com.example.devilcasinodemo.mvc.LoginViewModel
 import com.example.devilcasinodemo.paginas.gamesPages.BlackjackScreen
-import com.example.devilcasinodemo.paginas.gamesPages.DevilDicesScreen
+import com.example.devilcasinodemo.paginas.gamesPages.DevilDiceScreen
 import com.example.devilcasinodemo.paginas.login.CreateAccountScreen
 import com.example.devilcasinodemo.paginas.lobby.Lobby
 import com.example.devilcasinodemo.paginas.lobby.SettingsScreen
@@ -89,7 +90,30 @@ fun AppNavHost(navController: NavHostController, startDestination: String, modif
             }
         }
 
-        composable("liars_dice") { DevilDicesScreen(navController) }
+        composable("liars_dice") {
+
+            val userId = loginViewModel.userId
+
+            if (userId != null) {
+
+                val devilDiceViewModel: DevilDiceViewModel = viewModel()
+
+                DevilDiceScreen(
+                    navController = navController,
+                    viewModel = devilDiceViewModel,
+                    userId = userId
+                )
+
+            } else {
+
+                LaunchedEffect(Unit) {
+                    navController.navigate("login") {
+                        popUpTo("liars_dice") { inclusive = true }
+                    }
+                }
+
+            }
+        }
 
         composable("create_user") { CreateAccountScreen(navController) }
         composable("user") {

@@ -66,6 +66,26 @@ import retrofit2.Response
        TODO("Not yet implemented")
     }
 
+    override suspend fun createDiceGame(userId: Long, bet: Double, vsAI: Boolean): LiarDiceState {
+       TODO("Not yet implemented")
+    }
+
+    override suspend fun joinDiceGame(gameId: Long, userId: Long): LiarDiceState {
+       TODO("Not yet implemented")
+    }
+
+    override suspend fun diceBet(gameId: Long, userId: Long, quantity: Int, faceValue: Int) {
+       TODO("Not yet implemented")
+    }
+
+    override suspend fun callLie(gameId: Long, userId: Long) {
+       TODO("Not yet implemented")
+    }
+
+    override suspend fun getDiceState(userId: Long): LiarDiceState {
+       TODO("Not yet implemented")
+    }
+
     override suspend fun startGame(request: StartGameRequest)
             = startResponse!!
 

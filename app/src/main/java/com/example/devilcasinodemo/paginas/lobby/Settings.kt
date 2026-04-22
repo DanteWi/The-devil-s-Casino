@@ -197,7 +197,7 @@ fun changeLanguage(
 fun LanguageButton(
     flag: Int,
     isSelected: Boolean,
-    onClick: () -> Unit   // <-- remove @Composable here
+    onClick: () -> Unit
 ) {
     Box(
         modifier = Modifier

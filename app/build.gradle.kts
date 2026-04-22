@@ -28,7 +28,9 @@ android {
             buildConfigField(
                 "String",
                 "BASE_URL",
-                "\"http://10.0.2.2:8080/\""
+                "\"https://unsurmised-kimber-unswervingly.ngrok-free.dev/\""
+                //"\"http://10.0.2.2:8080/\""
+
             )
         }
 
@@ -36,7 +38,7 @@ android {
             buildConfigField(
                 "String",
                 "BASE_URL",
-                "\"https://yourserver.com/\""
+                "\"https://unsurmised-kimber-unswervingly.ngrok-free.dev/\""
             )
 
             isMinifyEnabled = true
