@@ -4,7 +4,7 @@
 ---
 
 ## Estado del proyecto
-**Versión actual:** `v0.6.0`  
+**Versión actual:** `v0.7.0`  
 Proyecto en desarrollo.
 
 ---
@@ -24,6 +24,9 @@ Proyecto en desarrollo.
 * Entorno de desarrollo y entorno de producción configurados.
 * Interfaz artística para generación dinámica de cartas en Blackjack.
 * Backend con API REST y base de datos MySQL.
+* Sesión persistente (Stay logged in) para mantener al usuario autenticado.
+* Sistema de tarjetas guardadas para almacenamiento seguro de métodos de pago.
+* Restricción de compra: ahora es obligatorio tener al menos una tarjeta registrada para realizar compras.
 
 ---
 
@@ -66,3 +69,4 @@ Proyecto en desarrollo.
 * `v0.4.0` → Sincronización completa de perfil y wallet, actualización en tiempo real.
 * `v0.5.0` → Settings, música de fondo, oferta diaria de 100 Devil Coins, personalización de idioma y música.
 * `v0.6.0` → Manejo de excepciones avanzado, uniformización de pantallas, mejoras en Blackjack (fluidez, tiempos y control de botones), entornos dev/prod e interfaz artística para cartas.
+* `v0.7.0` → Sesión persistente (stay logged in), sistema de tarjetas guardadas y restricción de compra con al menos una tarjeta registrada.
