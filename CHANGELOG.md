@@ -1,5 +1,28 @@
 # Changelog
 
+## v0.7.0 - 2026-05-15
+
+### Added
+
+* Implementación de **sesión persistente (Stay Logged In)** para mantener al usuario autenticado entre sesiones.
+* Sistema de **tarjetas guardadas** para almacenamiento de métodos de pago del usuario.
+* Nueva restricción en el sistema de compras:
+  * Ahora es obligatorio tener **al menos una tarjeta registrada** para poder realizar compras.
+
+### Improved
+
+* Mejora en la gestión de autenticación del usuario.
+* Mayor seguridad y control en el flujo de compras.
+* Mejor integración del sistema de tarjetas con el backend y la wallet.
+
+### Notes
+
+* La experiencia de usuario ahora es más fluida al evitar logins repetitivos.
+* La lógica de pagos queda preparada para futuras expansiones (verificación, múltiples tarjetas, etc.).
+* Base sólida para futuras mejoras en seguridad y sistema financiero del juego.
+
+---
+
 ## v0.6.0 - 2026-02-23
 
 ### Added
@@ -26,6 +49,8 @@
 * Mejor base técnica para futuras implementaciones (incluyendo Devil Dice).
 * Experiencia de juego más sólida y consistente en toda la aplicación.
 
+---
+
 ## v0.5.0 - 2026-02-09
 
 ### Added
@@ -42,7 +67,10 @@
 ### Notes
 - La música de fondo ahora se puede activar/desactivar y seleccionar desde Settings.
 - La oferta de 100 Devil Coins tiene un temporizador de 24 horas para ser reclamada.
--Devil Dice sigue sin funcionalidad
+- Devil Dice sigue sin funcionalidad.
+
+---
+
 ## v0.4.0 - 2026-01-26
 
 ### Added
@@ -61,6 +89,7 @@
 * Login y creación de usuario ahora funcionan correctamente con la actualización de perfil y wallet.
 * Base para futuras mejoras en otros juegos y funcionalidades de usuario.
 
+---
 
 ## v0.3.0 - 2026-01-12
 
@@ -69,7 +98,10 @@
 * Crear Usuario functional
 
 ### Notes
-* Login roto en el proceso de creacion de nuevo usuario
+
+* Login roto en el proceso de creación de nuevo usuario.
+
+---
 
 ## v0.2.0 - 2025-12-13
 
@@ -110,7 +142,3 @@
 
 * Esta versión solo incluye la UI y la navegación.
 * Próximas versiones añadirán la lógica de los juegos, control de DC y gestión completa del usuario.
-
----
-
-
