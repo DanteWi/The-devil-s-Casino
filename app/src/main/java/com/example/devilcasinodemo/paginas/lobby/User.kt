@@ -1,0 +1,480 @@
+package com.example.devilcasinodemo.paginas.lobby
+import WalletViewModel
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import com.example.devilcasinodemo.mvc.UserProfileViewModel
+import androidx.compose.runtime.collectAsState
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
+import com.example.devilcasinodemo.R
+import com.example.devilcasinodemo.mvc.LoginViewModel
+import com.example.devilcasinodemo.mvc.UserStatsViewModel
+import com.example.devilcasinodemo.mvc.dto.UserStatsViewModelFactory
+import com.example.devilcasinodemo.retrofit.ApiClient
+
+// ------------------------------------------------------
+// DATA CLASSES
+// ------------------------------------------------------
+
+data class CardItem(val name: String, val type: String)
+
+// ------------------------------------------------------
+// MAIN USER SCREEN
+// ------------------------------------------------------
+
+@OptIn(ExperimentalMaterial3Api::class)
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun User(
+    navController: NavHostController,
+    userId: Long,
+    viewModel: LoginViewModel,
+    walletviewModel: WalletViewModel
+) {
+    val neonOrange = Color(0xFFFF6600)
+    val context = LocalContext.current
+    val wallet: WalletViewModel = walletviewModel
+    val username = viewModel.username
+    val profileViewModel: UserProfileViewModel = viewModel()
+    val avatarVersion by profileViewModel.avatarVersion.collectAsState()
+    val uploading by profileViewModel.uploading.collectAsState()
+    val avatarUrl =
+        ApiClient.BASE_URL +
+                "api/users/avatar/$userId?v=$avatarVersion"
+    val imagePicker =
+        rememberLauncherForActivityResult(
+            ActivityResultContracts.GetContent()
+        ) { uri ->
+
+            if (uri != null) {
+                profileViewModel.uploadAvatar(
+                    context = context,
+                    uri = uri,
+                    userId = userId
+                )
+            }
+        }
+    val painter = rememberAsyncImagePainter(model = avatarUrl)
+
+
+    val api = remember { ApiClient.api }
+
+    val statsViewModel: UserStatsViewModel = viewModel(
+        factory = UserStatsViewModelFactory(api)
+    )
+
+    LaunchedEffect(userId) {
+        statsViewModel.loadStats(userId)
+    }
+
+    val winPercent = statsViewModel.winRate
+    val losePercent = statsViewModel.lossRate
+
+    // ---------- CARD PICKER STATE ----------
+    var showCardDialog by remember { mutableStateOf(false) }
+
+    val backendCards by profileViewModel.cards.collectAsState()
+    LaunchedEffect(userId) {
+        profileViewModel.fetchCards(userId)
+    }
+
+    var cards by remember {
+        mutableStateOf(
+            listOf(
+                CardItem("Add a Card First", "unknown")
+            )
+        )
+    }
+
+    LaunchedEffect(backendCards) {
+        if (backendCards.isNotEmpty()) {
+            cards = backendCards.map {
+                CardItem(it.cardNumber, it.cardType)
+            }
+        } else {
+            cards = listOf(CardItem("Add a Card First", "unknown"))
+        }
+    }
+
+    var selectedCard by remember { mutableStateOf(cards.first()) }
+
+    LaunchedEffect(cards) {
+        if (cards.isNotEmpty()) {
+            selectedCard = cards.last()
+        }
+    }
+
+    var showAddCardDialog by remember { mutableStateOf(false) }
+
+    // ------------------------------------------------------
+    // SCREEN LAYOUT
+    // ------------------------------------------------------
+    LaunchedEffect(userId) {
+        wallet.fetchWallet(userId)
+    }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black)
+            .verticalScroll(rememberScrollState()) // ✅ SCROLL
+            .padding(top = 40.dp, bottom = 40.dp),
+
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        // --------------------------------------------------
+        // AVATAR
+        // --------------------------------------------------
+
+        Box(
+            modifier = Modifier
+                .size(160.dp)
+                .clip(CircleShape)
+                .background(Color(0xFFB71C1C))
+                .clickable(enabled = !uploading) {
+                    imagePicker.launch("image/*")
+                },
+            contentAlignment = Alignment.Center
+        ) {
+
+            if (painter.state is AsyncImagePainter.State.Error) {
+
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = null,
+                    tint = Color.Black,
+                    modifier = Modifier.size(90.dp)
+                )
+
+            } else {
+
+                Image(
+                    painter = painter,
+                    contentDescription = "Avatar",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            }
+
+            // Upload indicator
+            if (uploading) {
+                Box(
+                    modifier = Modifier
+                        .matchParentSize()
+                        .background(Color.Black.copy(alpha = 0.5f)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(color = Color.Yellow)
+                }
+            }
+        }
+
+
+
+        Spacer(modifier = Modifier.height(30.dp))
+
+        // --------------------------------------------------
+        // USER INFO
+        // --------------------------------------------------
+
+        Text(text = username ?: "Unknown user", color = Color.Yellow, fontSize = 26.sp)
+        Spacer(modifier = Modifier.height(30.dp))
+        Text(text = "${wallet?.walletAmount ?: 0.0} DC", color = Color(0xFFFF1744), fontSize = 26.sp)
+
+        Spacer(modifier = Modifier.height(30.dp))
+
+        // --------------------------------------------------
+        // DONUT CHART
+        // --------------------------------------------------
+
+        DonutChart(
+            wins = winPercent,
+            losses = losePercent,
+            size = 250.dp
+        )
+
+        Spacer(modifier = Modifier.height(30.dp))
+
+        // --------------------------------------------------
+        // CARD PICKER
+        // --------------------------------------------------
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth(0.85f)
+                .height(90.dp)
+                .border(3.dp, neonOrange, RoundedCornerShape(20.dp))
+                .padding(16.dp),
+
+            contentAlignment = Alignment.Center
+        ) {
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { showCardDialog = true }
+            ) {
+
+                CardLogo(type = selectedCard.type)
+
+                Spacer(Modifier.width(10.dp))
+
+                Text(
+                    stringResource(R.string.card_in_usage, selectedCard.name),
+                    color = neonOrange
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(25.dp))
+
+        // --------------------------------------------------
+        // SETTINGS BUTTON (UNDER CARD PICKER)
+        // --------------------------------------------------
+
+        IconButton(
+            onClick = {
+                navController.navigate("settings")
+            },
+            modifier = Modifier
+                .size(70.dp)
+                .background(Color(0xFFD90202), CircleShape)
+        ) {
+            Icon(
+                imageVector = Icons.Default.Settings,
+                contentDescription = "Settings",
+                tint = Color.Black,
+
+                modifier = Modifier.size(36.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(40.dp))
+    }
+
+    // ------------------------------------------------------
+    // POPUP DIALOG FOR CARD PICKER
+    // ------------------------------------------------------
+
+    if (showCardDialog) {
+        CardPickerDialog(
+            cards = cards,
+            onSelect = {
+                selectedCard = it
+                showCardDialog = false
+            },
+            onAdd = {
+                showCardDialog = false
+                showAddCardDialog = true
+            },
+            onDismiss = { showCardDialog = false }
+        )
+    }
+
+    if (showAddCardDialog) {
+        var newCardNumber by remember { mutableStateOf("") }
+        var newCardType by remember { mutableStateOf("visa") }
+        var isAdding by remember { mutableStateOf(false) }
+
+        AlertDialog(
+            onDismissRequest = { showAddCardDialog = false },
+            title = { Text("Add New Card", color = neonOrange) },
+            text = {
+                Column {
+                    OutlinedTextField(
+                        value = newCardNumber,
+                        onValueChange = { newCardNumber = it },
+                        label = { Text("Card Number", color = Color.White) },
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            focusedBorderColor = neonOrange,
+                            unfocusedBorderColor = neonOrange,
+                        )
+                    )
+                    Spacer(Modifier.height(16.dp))
+                    Text("Card Type:", color = Color.White)
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        RadioButton(
+                            selected = newCardType == "visa",
+                            onClick = { newCardType = "visa" },
+                            colors = RadioButtonDefaults.colors(selectedColor = neonOrange)
+                        )
+                        Text("Visa", color = Color.White)
+                        Spacer(Modifier.width(16.dp))
+                        RadioButton(
+                            selected = newCardType == "master",
+                            onClick = { newCardType = "master" },
+                            colors = RadioButtonDefaults.colors(selectedColor = neonOrange)
+                        )
+                        Text("MasterCard", color = Color.White)
+                    }
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        isAdding = true
+                        profileViewModel.addCard(userId, newCardNumber, newCardType) { success ->
+                            isAdding = false
+                            if (success) {
+                                showAddCardDialog = false
+                                wallet.fetchWallet(userId) // refresh to update hasCards
+                            }
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = neonOrange),
+                    enabled = newCardNumber.isNotBlank() && !isAdding
+                ) {
+                    Text(if (isAdding) "Adding..." else "Add", color = Color.Black)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showAddCardDialog = false }) {
+                    Text("Cancel", color = Color.White)
+                }
+            },
+            containerColor = Color.Black
+        )
+    }
+}
+
+// ------------------------------------------------------
+// DONUT CHART (unchanged)
+// ------------------------------------------------------
+
+@Composable
+fun DonutChart(wins: Double, losses: Double, size: Dp) {
+    val sweepWin = (wins / (wins + losses)) * 360
+    val sweepLoss = 360 - sweepWin
+    val neonOrange = Color(0xFFFF6600)
+    Box(contentAlignment = Alignment.Center, modifier = Modifier.size(size)) {
+        Canvas(modifier = Modifier.size(size)) {
+            val strokeWidth = size.toPx() * 0.20f
+
+            drawArc(
+                color = Color.Red,
+                startAngle = -90f,
+                sweepAngle = sweepLoss.toFloat(),
+                useCenter = false,
+                style = Stroke(width = strokeWidth)
+            )
+
+            drawArc(
+                color = Color.Yellow,
+                startAngle = (-90 + sweepLoss).toFloat(),
+                sweepAngle = sweepWin.toFloat(),
+                useCenter = false,
+                style = Stroke(width = strokeWidth)
+            )
+        }
+
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                text = stringResource(R.string.wins, String.format("%.2f", wins)),
+                color = Color.Yellow,
+                fontSize = 14.sp
+            )
+            Text(
+                text = stringResource(R.string.losses, String.format("%.2f", losses)),
+                color = Color.Red,
+                fontSize = 14.sp
+            )
+        }
+    }
+}
+
+// ------------------------------------------------------
+// CARD LOGO (simple version)
+// ------------------------------------------------------
+
+@Composable
+fun CardLogo(type: String) {
+    val color = when (type.lowercase()) {
+        "visa" -> Color.Blue
+        "master" -> Color.Red
+        "paypal" -> Color.Cyan
+        else -> Color.Gray
+    }
+
+    Box(
+        modifier = Modifier
+            .size(26.dp)
+            .background(color, CircleShape)
+    )
+}
+
+// ------------------------------------------------------
+// POPUP DIALOG
+// ------------------------------------------------------
+
+@Composable
+fun CardPickerDialog(
+    cards: List<CardItem>,
+    onSelect: (CardItem) -> Unit,
+    onAdd: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.select_card)) },
+        text = {
+            Column {
+
+                cards.forEach { card ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp)
+                            .clickable { onSelect(card) },
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
+                        CardLogo(type = card.type)
+
+                        Spacer(Modifier.width(12.dp))
+
+                        Text(card.name, color = Color.Red)
+                    }
+                }
+
+                Spacer(Modifier.height(12.dp))
+
+                Button(onClick = onAdd) {
+                    Text(stringResource(R.string.add_new_card), color = Color.Red)
+                }
+            }
+        },
+        confirmButton = {},
+        dismissButton = {}
+    )
+}
